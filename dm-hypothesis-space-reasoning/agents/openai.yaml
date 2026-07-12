@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hypothesis-Space Reasoning"
+  short_description: "Handle uncertainty from too many plausible answers"
+  default_prompt: "Use $dm-hypothesis-space-reasoning to reason through this ambiguous engineering question."

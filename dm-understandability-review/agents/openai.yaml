@@ -1,0 +1,4 @@
+interface:
+  display_name: "Understandability Review"
+  short_description: "Review whether behavior is easy to reason about"
+  default_prompt: "Use $dm-understandability-review to review this design for reasoning risk."

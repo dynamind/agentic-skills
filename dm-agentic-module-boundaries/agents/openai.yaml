@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Module Boundaries"
+  short_description: "Map code boundaries for agent-sized reasoning"
+  default_prompt: "Use $dm-agentic-module-boundaries to map the module boundaries for this codebase change."

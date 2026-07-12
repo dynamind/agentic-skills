@@ -1,0 +1,4 @@
+interface:
+  display_name: "Contract-First Modules"
+  short_description: "Design honest contracts before module internals"
+  default_prompt: "Use $dm-contract-first-modules to design a module contract before implementation."

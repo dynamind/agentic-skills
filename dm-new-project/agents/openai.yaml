@@ -1,0 +1,4 @@
+interface:
+  display_name: "DM New Project"
+  short_description: "Scaffold Roy's Quarkus and Vue monorepo"
+  default_prompt: "Use $dm-new-project to scaffold a new Quarkus and Vue project."
