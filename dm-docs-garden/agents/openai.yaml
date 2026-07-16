@@ -1,0 +1,4 @@
+interface:
+  display_name: "DM Docs Garden"
+  short_description: "Audit and maintain MkDocs documentation health"
+  default_prompt: "Use $dm-docs-garden to audit this MkDocs documentation for correctness, navigation, ADR, Mermaid, and lifecycle issues without editing files."

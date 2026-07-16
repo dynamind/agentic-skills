@@ -1,0 +1,4 @@
+interface:
+  display_name: "DM Docs Ingest"
+  short_description: "Turn source evidence into trusted documentation"
+  default_prompt: "Use $dm-docs-ingest to document this repository from code, tests, configuration, and existing documents."
