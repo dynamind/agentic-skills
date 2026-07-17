@@ -10,6 +10,7 @@ This repository contains a unified set of skills for making agentic software mor
 - `dm-contract-first-modules` defines contracts that make boundaries trustworthy.
 - `dm-understandability-review` reviews code and designs for hidden behavior and reasoning risk.
 - `dm-hypothesis-space-reasoning` makes ambiguity explicit and reduces plausible hypotheses.
+- `dm-problem-solution-provenance` traces goals, experienced problems, solution options, trade-offs, and consequences.
 - `dm-bounded-agent-work` turns requests into agent-sized, verifiable tasks.
 - `dm-new-project` scaffolds the preferred Quarkus, Vue, documentation, Terraform, and Azure DevOps monorepo.
 
@@ -23,7 +24,7 @@ See [SUITE.md](SUITE.md) for boundaries, principles, and recommended composition
 
 ## Installation and synchronization
 
-Run the installer from this repository to synchronize all nine skills with the global skill directories used by Codex and Claude Code:
+Run the installer from this repository to synchronize all ten skills with the global skill directories used by Codex and Claude Code:
 
 ```bash
 ./install-skills.sh
@@ -44,6 +45,7 @@ Restart the agent or start a new task after synchronization so newly changed ski
 For a large codebase change:
 
 ```text
+Use $dm-problem-solution-provenance when the requested solution or its consequences need to be challenged.
 Use $dm-bounded-agent-work to define the slice and verification.
 Use $dm-agentic-module-boundaries to locate the reasoning boundary.
 Use $dm-contract-first-modules if the change crosses a boundary.
@@ -59,4 +61,3 @@ Use $dm-docs-garden to audit the result after feedback or change.
 ```
 
 The skills are self-contained. Each installable folder contains a `SKILL.md`, optional references or scripts, and an `agents/openai.yaml` metadata file where applicable.
-

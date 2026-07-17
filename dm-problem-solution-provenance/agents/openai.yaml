@@ -1,0 +1,4 @@
+interface:
+  display_name: "Problem-Solution Provenance"
+  short_description: "Trace goals, solution trade-offs, and consequences"
+  default_prompt: "Use $dm-problem-solution-provenance to map this goal, its problems, candidate solutions, and introduced problems."

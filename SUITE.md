@@ -8,6 +8,7 @@ This suite aligns software structure, documentation, and agent work with human r
 - Make contracts strong enough that internals can remain hidden until they matter.
 - Treat hidden coupling and undiscovered consumers as first-class risks.
 - Make uncertainty visible instead of silently choosing one interpretation.
+- Preserve why problems and solution branches exist so upstream choices can be reconsidered.
 - Keep documentation traversable, authoritative, and progressively disclosed.
 - Prefer concise outputs that humans can verify.
 
@@ -22,6 +23,10 @@ This suite aligns software structure, documentation, and agent work with human r
 `dm-contract-first-modules` designs or repairs the contract across a module boundary, including inputs, outputs, errors, timing, and ownership.
 
 `dm-hypothesis-space-reasoning` expands and compares plausible explanations when requirements or evidence are ambiguous, then identifies the smallest useful next check.
+
+`dm-problem-solution-provenance` maps goals, observed problems, solution options, trade-offs, and newly introduced
+problems. It distinguishes experienced needs from requested implementations and exposes downstream branches that an
+upstream decision may invalidate.
 
 `dm-understandability-review` evaluates whether humans and agents can form a reliable model of code, designs, tests, and boundaries.
 
@@ -40,12 +45,14 @@ This suite aligns software structure, documentation, and agent work with human r
 ### Large codebase change
 
 ```text
-bounded-agent-work → module-boundaries → contract-first-modules (if needed)
+problem-solution-provenance (when solution framing matters)
+                   → bounded-agent-work → module-boundaries → contract-first-modules (if needed)
                    → implementation → understandability-review
                    → docs-garden (to synchronize affected documentation)
 ```
 
-Use hypothesis-space-reasoning at any point where the evidence supports multiple plausible interpretations.
+Use hypothesis-space-reasoning at any point where the evidence supports multiple plausible interpretations. Feed the
+result into problem-solution provenance when those interpretations imply different interventions.
 
 ### New project
 
@@ -65,4 +72,3 @@ For review-only work, use `docs-garden` in audit mode and do not edit files.
 ## Repository contract
 
 The root `dm-*` directories are the installable skills and the source of truth for synchronization. `docs-skills/` and `modularity-skills/` retain the original pack documentation from the merge; the root `README.md` and this file are the unified pack-level documentation. The installer synchronizes only root skill directories and leaves unrelated global skills untouched.
-
