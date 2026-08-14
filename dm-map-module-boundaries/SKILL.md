@@ -1,9 +1,9 @@
 ---
-name: dm-agentic-module-boundaries
+name: dm-map-module-boundaries
 description: Map, evaluate, and reshape software module boundaries so coding agents can reason within bounded context. Use when analyzing a large codebase, planning a feature or refactor, splitting a subsystem, reducing nonlocal reasoning, identifying hidden coupling, or deciding whether a change fits inside one module or crosses contracts.
 ---
 
-# Agentic Module Boundaries
+# Map Module Boundaries
 
 Use this skill to make a codebase easier for agents and humans to reason about by aligning module boundaries with reasoning boundaries.
 

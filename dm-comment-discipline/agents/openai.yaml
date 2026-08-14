@@ -1,0 +1,4 @@
+interface:
+  display_name: "Comment Discipline Review"
+  short_description: "Review changed or explicitly scoped code comments"
+  default_prompt: "Use $dm-comment-discipline to review the comment blocks touched by the last commit."

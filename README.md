@@ -4,15 +4,19 @@ This repository contains a unified set of skills for making agentic software mor
 
 ## Skill groups
 
-### Agentic modularity
+### Development
 
-- `dm-agentic-module-boundaries` maps module boundaries and hidden coupling.
+- `dm-new-project` scaffolds the preferred Quarkus, Vue, documentation, Terraform, and Azure DevOps monorepo.
+- `dm-comment-discipline` reviews code for poor comment hygiene, given a review scope (e.g., current worktree, PR, last commit) 
+
+### Reasoning
+
+- `dm-map-module-boundaries` maps module boundaries and hidden coupling.
+- `dm-bounded-agent-work` turns requests into agent-sized, verifiable tasks.
 - `dm-contract-first-modules` defines contracts that make boundaries trustworthy.
 - `dm-understandability-review` reviews code and designs for hidden behavior and reasoning risk.
 - `dm-hypothesis-space-reasoning` makes ambiguity explicit and reduces plausible hypotheses.
 - `dm-problem-solution-provenance` traces goals, experienced problems, solution options, trade-offs, and consequences.
-- `dm-bounded-agent-work` turns requests into agent-sized, verifiable tasks.
-- `dm-new-project` scaffolds the preferred Quarkus, Vue, documentation, Terraform, and Azure DevOps monorepo.
 
 ### Documentation
 
@@ -47,7 +51,7 @@ For a large codebase change:
 ```text
 Use $dm-problem-solution-provenance when the requested solution or its consequences need to be challenged.
 Use $dm-bounded-agent-work to define the slice and verification.
-Use $dm-agentic-module-boundaries to locate the reasoning boundary.
+Use $dm-map-module-boundaries to locate the reasoning boundary.
 Use $dm-contract-first-modules if the change crosses a boundary.
 Use $dm-understandability-review before accepting the design or implementation.
 ```

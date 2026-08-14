@@ -371,7 +371,7 @@ quarkus.swagger-ui.always-include=true
 quarkus.application.name={slug}
 
 quarkus.datasource.db-kind=postgresql
-quarkus.datasource.devservices.image-name=postgres:16-alpine
+quarkus.datasource.devservices.image-name=postgres:18-alpine
 quarkus.datasource.devservices.port=5432
 quarkus.datasource.devservices.volumes."../data/local-only/postgres-dev"=/var/lib/postgresql/data
 quarkus.flyway.migrate-at-start=true

@@ -10,22 +10,26 @@ Usage: ./install-skills.sh [--dry-run] [--codex-only | --claude-only]
 
 Environment overrides:
   CODEX_SKILLS_DIR    Default: ~/.codex/skills
+  CODEX_SKILLS_DIR    Default: ~/.codex/skills
   CLAUDE_SKILLS_DIR   Default: ~/.claude/skills
 EOF
 }
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+agents_dir="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
 codex_dir="${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
 claude_dir="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 dry_run=false
+install_agents=true
 install_codex=true
 install_claude=true
 
 for arg in "$@"; do
   case "$arg" in
     --dry-run) dry_run=true ;;
-    --codex-only) install_codex=true; install_claude=false ;;
-    --claude-only) install_codex=false; install_claude=true ;;
+    --agents-only) install_agents=true; install_codex=false; install_claude=false ;;
+    --codex-only) install_agents=false; install_codex=true; install_claude=false ;;
+    --claude-only) install_agents=false; install_codex=false; install_claude=true ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown option: $arg" >&2; usage >&2; exit 2 ;;
   esac
