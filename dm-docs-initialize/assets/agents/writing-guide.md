@@ -1,86 +1,89 @@
 # Writing guide
 
-Applies to anything you write that isn't executable code: docs, ADRs, glossary entries, commit
-messages, and code comments.
+This guide applies to everything that you write that is not executable code: docs, ADRs,
+glossary entries, commit messages, and code comments.
 
 ## The one rule
 
-**Plain language, proportional to the thing being described.** Most of what we build is
-ordinary work, and it should read that way. Jargon density and structural ceremony are not
-evidence of rigor. They are usually evidence that the author didn't know what they wanted to
-say. Generated material has a strong pull toward heavy framing for a small change, and it
-makes documents nobody reads.
+**Use plain language, in proportion to the subject.** Most of our work is ordinary work, and
+it must read that way. Dense jargon and elaborate structure do not prove rigor. They usually
+show that the author did not know what to say. Generated text tends toward heavy structure
+for a small change, and it produces documents that nobody reads.
 
 ## Documents
 
-- **A document has one job.** If you can't say what a page is for in one sentence, split it
-  or delete it.
-- **Say the current state, not the history of how you got there.** Superseded reasoning
-  belongs in an ADR or `docs/archived/`, not inline.
-- **If a document isn't scannable in five minutes, it doesn't earn its place.** Length is a
-  cost paid by every future reader.
-- **Don't duplicate.** Link to the authoritative page instead of restating it. A fact stated
-  in two places will be wrong in one of them within a month.
-- **Date anything that is a snapshot**: a review, an audit, a migration status. Undated
-  snapshots quietly become canon. Use a blockquote at the top of the page
+- **A document has one job.** If you cannot say what a page is for in one sentence, split
+  the page or delete it.
+- **State the current state. Do not state how you reached it.** Reasoning that no longer
+  applies goes in an ADR or in `docs/archived/`. It does not stay in the page.
+- **A document that a reader cannot scan in five minutes does not earn its place.** Every
+  future reader pays for its length.
+- **Do not duplicate.** Link to the authoritative page. Do not repeat it. A fact in two
+  places is wrong in one of them within a month.
+- **Date every snapshot**: a review, an audit, a migration status. An undated snapshot
+  becomes canon without anybody deciding so. Use a blockquote at the top of the page
   (`> **Reviewed:** 2026-09-14`), not frontmatter.
-- **Mark what is not confirmed.** A fact from a single unconfirmed source is followed by
+- **Mark what is not confirmed.** Follow a fact from one unconfirmed source with
   *(unverified)*. A verified fact names its source. A question for a human goes in
   `docs/product/questions.md`, not in the page.
-- **Registers have sections.** `docs/product/questions.md`, `docs/product/ideas.md`, and
-  `docs/architecture/exceptions.md` separate open items from answered ones. Insert a new
-  entry in the open section, in the file's own format. Never append at the bottom.
-- **Displaced content gets folded or dropped, never a new page.** When a restructure
-  leaves content without a home, put it in an existing section or drop it and say so.
-- **A new page goes in the sidebar** in `docs/.vitepress/config.mts`, or nobody finds it.
-- **No em-dashes, anywhere.** Not in prose, headings, tables, register entries, comments,
-  or commit messages. Use a colon, a comma, parentheses, or a second sentence. In a
-  link-target heading a dash also breaks the slug.
-- **Cite files outside `docs/` in code spans**, not markdown links. The dead-link check
-  cannot follow them.
+- **A register has sections.** `docs/product/questions.md`, `docs/product/ideas.md`, and
+  `docs/architecture/exceptions.md` hold open items apart from answered ones. Insert a new
+  entry in the open section, in the format of the file. Never append at the end.
+- **Fold or drop displaced content. Never make a new page for it.** If a restructure leaves
+  content without a home, put it in an existing section, or drop it and say that you did.
+- **Put a new page in the sidebar** in `docs/.vitepress/config.mts`. Otherwise nobody finds
+  it.
+- **A heading that is a link target uses a colon, never an em-dash.** The slugifier keeps
+  the em-dash, and the dead-link check does not validate an `#anchor`, so the broken link is
+  silent.
+- **Cite a file outside `docs/` in a code span**, not in a markdown link. The dead-link check
+  cannot follow it.
 
 ## ADRs and decisions
 
-- **A decision is a constraint, not an essay.** One-line statement, plus one verifiable
-  consequence: a test, a type, a lint rule, a schema constraint, a config default.
-- **No "Rationale / Alternatives Considered / Trade-off Analysis" scaffolding by default.**
-  Write those sections when someone actually disputes the decision, and write only the
-  section that answers the dispute.
-- **Determinism lives on the output, not the process.** Typed artifacts, contract tests,
-  schemas, IaC plans carry the rigor. Process ceremony that produces no artifact produces
-  no rigor.
-- ADRs live in `docs/architecture/adrs/adr-NNN-kebab-title.md`, three digits, sequential.
-- **An ADR is read for years.** No ticket keys, no inventory of existing files, no names
-  that change per iteration. A rejected alternative and its reason go in the
-  rejected-alternatives section, not in the decision text.
-- **Never weaken an ADR to accommodate what the code actually does.** A principle edited to
-  match reality stops constraining anything. Record the gap in
+- **A decision is a constraint, not an essay.** Write one statement and one consequence that
+  can be verified: a test, a type, a lint rule, a schema constraint, or a config default.
+- **Do not add "Rationale / Alternatives Considered / Trade-off Analysis" sections by
+  default.** Write such a section when somebody disputes the decision. Write only the section
+  that answers the dispute.
+- **Rigor is in the output, not in the process.** Typed artifacts, contract tests, schemas
+  and IaC plans carry it. A process step that produces no artifact produces no rigor.
+- An ADR lives in `docs/architecture/adrs/adr-NNN-kebab-title.md`, with three digits, in
+  sequence.
+- **A reader reads an ADR for years.** Use no ticket keys, no list of the files that exist
+  today, and no names that change each iteration. A rejected alternative and its reason go in
+  the rejected-alternatives section, not in the decision text.
+- **Never weaken an ADR to match what the code does.** A principle that is edited to match
+  reality constrains nothing. Record the difference in
   [`docs/architecture/exceptions.md`](../docs/architecture/exceptions.md) as an `EX-nnn`
-  entry (what we do, why, what bounds it, what ends it) and add a pointer from the ADR so a
-  reader isn't misled. If a deviation turns out to be permanent and right, supersede the
-  ADR with a new one; don't let the register hold it forever.
+  entry: what we do, the reason, what limits it, and what ends it. Add a pointer from the ADR,
+  so that a reader is not misled. If a deviation proves permanent and correct, write a new
+  ADR that supersedes the old one. Do not leave the entry in the register.
 
 ## Glossary entries
 
-`docs/glossary.md` is the authoritative glossary and the one doc worth reading before working
-in the domain.
+`docs/glossary.md` is the authoritative glossary. It is the one document to read before you
+work in the domain.
 
-- Entries say **what we mean**, not how we implement it. Implementation detail lives in code.
-- Domain terms stay in the language the business speaks. Translating them loses the thing
-  the user actually says.
-- **No wire or code identifiers** and no mechanics. An entry is one or two sentences of
-  domain meaning; mechanics belong in the feature doc.
-- **Do not add entries unprompted.** The bar is a term the business needs defined. When in
-  doubt, propose the text in chat.
+- An entry states **what we mean**. It does not state how we implement it. Implementation
+  detail stays in the code.
+- A domain term stays in the language that the business speaks. A translation loses the word
+  that the user says.
+- **Use no wire identifiers and no code identifiers**, and describe no mechanics. An entry is
+  one or two sentences of domain meaning. Mechanics belong in the feature page.
+- **Do not add an entry unless you are asked.** The bar is a term that the business needs
+  defined. If you are not sure, propose the text in chat.
 
 ## Diagrams
 
-The docs site renders Mermaid natively with light and dark themes.
+The docs site renders Mermaid itself, in a light theme and a dark theme.
 
-- **Theme-neutral only.** No `fill:`, no hex colors, no `style` overrides. They break in one
-  of the two themes. Convey semantics with shapes, stroke weight, and link style.
-- **`<br/>` is silently dropped.** For multi-line labels use the `htmlLabels: true`
-  frontmatter config and backtick markdown-string labels with real newlines:
+- **Use theme-neutral diagrams only.** Use no `fill:`, no hex colors, and no `style`
+  overrides. They break in one of the two themes. Show meaning with shape, stroke weight, and
+  link style.
+- **`<br/>` is dropped without a warning.** For a label on more than one line, use the
+  `htmlLabels: true` frontmatter config and a backtick markdown-string label with real
+  newlines:
 
   ```
   ---
@@ -92,35 +95,35 @@ The docs site renders Mermaid natively with light and dark themes.
       one qualifier line`"]
   ```
 
-- **A node is a bold name plus at most one qualifier line.** Explanation goes in the prose
-  around the diagram. A box full of text is a paragraph wearing a rectangle.
-- **Sequence-diagram labels are one source line.** Backtick strings cannot span lines
-  there, so write the label on one line with ` · ` separators.
+- **A node holds a bold name and at most one more line.** Put the explanation in the prose
+  around the diagram. A box full of text is a paragraph in a rectangle.
+- **A label in a sequence diagram is one source line.** A backtick string cannot span lines
+  there. Write the label on one line and separate the parts with ` · `.
 
 ## Commit messages
 
-Conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, optional scope (`feat(route):`).
-Subject in the imperative. Body explains *why* if the diff doesn't. No hard line breaks in
-the body; let it soft-wrap.
+Use conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, with an optional scope
+(`feat(route):`). Write the subject in the imperative. The body explains why, if the diff
+does not. Use no hard line breaks in the body. Let it wrap.
 
-**Say what the change is, not how you got there.** Most commits need no body, or one or two
-lines. Never narrate the investigation. A finding worth keeping belongs in the doc or ADR
-that owns the subject.
+**Say what the change is. Do not say how you reached it.** Most commits need no body, or one
+or two lines. Never describe the investigation. A finding worth keeping goes in the document
+or the ADR that owns the subject.
 
 A commit that belongs to a backlog item ends its first line with the ticket ID, for example
-`docs: propose ADR-042 support infinite probability drive (KEY-123)`. Ticket IDs appear
-nowhere else, except in a feature sketch before it is built; the rule is in `AGENTS.md`.
+`docs: propose ADR-042 support infinite probability drive (KEY-123)`. A ticket ID appears
+nowhere else, except in a feature sketch before it is built. The rule is in `AGENTS.md`.
 
 ## Code comments
 
-- **Specify intent**: state why the code exists or what rule it enforces, not what the
+- **State the intent**: why the code exists, or which rule it enforces. Do not state what the
   syntax does.
-- **Use at most a short rationale**: one direct assertion or two short clauses. A paragraph
-  usually signals implicit code or misplaced documentation.
-- **Avoid narrative**: direct, present-tense language without conversational setup or
-  hedging.
-- **Exclude historic context**: never explain what the code used to do or how a prior bug
-  behaved. The comment owns present intent, with allowance for platform behaviors the code
-  guards against.
-- **Prefer staccato phrasing**: "all states; sent work still counts as done" beats "the
-  reason we take this in all states is that sent work is still work done."
+- **Give a short reason only**: one statement, or two short clauses. A paragraph usually
+  means that the code is unclear, or that the text belongs in a document.
+- **Do not narrate.** Use direct language in the present tense. Do not open with a setup
+  sentence and do not hedge.
+- **Do not give history.** Never explain what the code did before, or how an earlier defect
+  behaved. A comment states the present intent. It can describe a platform behavior that the
+  code guards against.
+- **Write short phrases**: "all states; sent work still counts as done" is better than "the
+  reason we take this in all states is that sent work is still work done".
