@@ -60,7 +60,7 @@ belongs there; that is enough.
 | Conventions | settle recurring style discussions | scope and status blockquote, one rule per section, Wrong / Right pairs |
 | ADR | constrain | `# ADR-NNN: statement`, `## Status`, `## Context`, `## Decision`, `## Consequences`; alternatives only when disputed |
 | Register | hold items until they land elsewhere | open section first, closed or answered section last, one format per file |
-| Reference mirror | preserve an external source | dated, ids of the originals, secrets removed, links to the page that worked the content in |
+| Reference mirror | preserve an external source | dated, ids of the originals, secrets removed, links to the page that worked the content in. No template: the shape follows the source |
 
 Templates for each kind are in `../assets/pages/`. Copy the shape, not the placeholder text.
 

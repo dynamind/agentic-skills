@@ -115,7 +115,7 @@ page; it is the complete rule set and is also what the scaffold installs as
 - `assets/vitepress/`: `package.json`, `.npmrc`, `config.mts`, theme, and the `glossary/`
   build-time plugin that links term mentions to `docs/glossary.md` with tooltips.
 - `assets/pages/`: templates per page kind (home, introduction, glossary, registers,
-  ADR, how-to, explanation, feature, persona, hazards, reference mirror, conventions).
+  ADR, how-to, explanation, feature, persona, hazards, conventions).
   Copy the shape, not the placeholder text.
 - `assets/agents/`: `AGENTS.md`, `CLAUDE.md`, `.agents/writing-guide.md`,
   `.agents/decisions.md`.
