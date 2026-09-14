@@ -29,9 +29,9 @@ page; it is the complete rule set and is also what the scaffold installs as
 - **No ticket IDs** in docs. A link to the backlog is allowed.
 - **Links inside `docs/` are relative markdown links ending in `.md`.** Files outside
   `docs/` are cited in code spans, never linked.
-- **Headings are short noun phrases.** A heading that is a link target uses a colon, never
-  an em-dash; the slugifier breaks on it. In prose, a colon or a second sentence beats an
-  em-dash. The register separators (`**Q: who** — text`) are a fixed format and stay.
+- **No em-dashes, anywhere.** Not in prose, headings, tables, register entries, code
+  comments, or commit messages. Use a colon, a comma, parentheses, or a second sentence.
+  Headings are short noun phrases; a link-target heading with a dash also breaks the slug.
 - **Tables for parallel facts, prose for argument.** A list item is one or two sentences.
 - **Mermaid only, theme-neutral.** No fill, hex color, `style`, `classDef` color, or
   `%%{init}`. A node is a bold name plus at most one qualifier.

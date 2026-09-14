@@ -70,8 +70,8 @@ Three registers carry what does not yet belong to a page:
 
 - `docs/product/ideas.md`: observations, annoyances, ideas. Prefix each with who raised
   it. Committed work moves to the backlog and out of this file.
-- `docs/product/questions.md`: one line per question, `**Q: who** — text` then
-  `**A: date** — text`. References point outward from the register; code never points
+- `docs/product/questions.md`: one line per question, `**Q (who):** text` then
+  `**A (date):** text`. References point outward from the register; code never points
   back at it. An answered question names the page where the answer landed.
 - `docs/architecture/exceptions.md`: `EX-nnn` entries for deviations from accepted ADRs,
   each with what we do, which decision it departs from, why, what bounds it, and what
@@ -116,7 +116,7 @@ hero page is wanted, and Mermaid's `config: htmlLabels: true` inside a diagram.
 - Files outside `docs/` (source, scripts, agent skills) are cited in code spans, not
   linked. The dead-link check cannot follow them, and a link that is never checked rots.
 - Link text says why the destination matters, not "here".
-- A heading that is a link target uses a colon, never an em-dash.
+- No em-dashes anywhere in the tree. A heading uses a colon where it needs a divider.
 
 ## Diagrams
 

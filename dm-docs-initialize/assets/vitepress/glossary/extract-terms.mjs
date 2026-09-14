@@ -21,11 +21,11 @@ function stripMarkdown(text) {
 }
 
 // Ported verbatim from VitePress's own slugify (node_modules/vitepress/dist/node,
-// search "const slugify = (str) =>" — this is VitePress's own override, not the
+// search "const slugify = (str) =>"; this is VitePress's own override, not the
 // markdown-it-anchor library default, and the two disagree). Guessing at this
 // from a handful of observed anchors cost two rounds of wrong output (a
 // double-hyphen theory, then a "strip punctuation, don't hyphenate it" theory
-// that missed apostrophes specifically) — reading the real implementation is
+// that missed apostrophes specifically). Reading the real implementation is
 // what finally matched every case, including "don't" -> "don-t".
 const R_COMBINING = /[\u0300-\u036F]/g
 const R_CONTROL = /[\u0000-\u001f]/g

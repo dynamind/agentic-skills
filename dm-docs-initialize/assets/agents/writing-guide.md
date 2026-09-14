@@ -33,8 +33,9 @@ makes documents nobody reads.
 - **Displaced content gets folded or dropped, never a new page.** When a restructure
   leaves content without a home, put it in an existing section or drop it and say so.
 - **A new page goes in the sidebar** in `docs/.vitepress/config.mts`, or nobody finds it.
-- **Link-target headings use a colon, never an em-dash.** The slugifier keeps the em-dash
-  and the dead-link check does not validate `#anchors`, so the broken link is silent.
+- **No em-dashes, anywhere.** Not in prose, headings, tables, register entries, comments,
+  or commit messages. Use a colon, a comma, parentheses, or a second sentence. In a
+  link-target heading a dash also breaks the slug.
 - **Cite files outside `docs/` in code spans**, not markdown links. The dead-link check
   cannot follow them.
 

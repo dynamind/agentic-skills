@@ -28,7 +28,7 @@
 }
 
 /* Glossary term links (see .vitepress/glossary/glossary-plugin.mjs). CSS-only
-   tooltip via the data-tooltip attribute — no Vue component, so it survives
+   tooltip via the data-tooltip attribute, no Vue component, so it survives
    static pre-rendering with no hydration step of its own. */
 /* .vp-doc a already sets a solid underline at equal-or-higher specificity;
    the compound selector is needed to actually win the dashed style. */

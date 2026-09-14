@@ -1,6 +1,6 @@
 // VitePress renders a page's markdown more than once per build, so
 // glossary-plugin.mjs's own "first occurrence" bookkeeping can't see across
-// every pass — see the comment in glossary-plugin.mjs. This runs once per
+// every pass (see the comment in glossary-plugin.mjs). This runs once per
 // FINAL page (VitePress's transformHtml hook, right before the file is
 // written) and is the actual guarantee: keep only the first glossary link to
 // a given anchor, unwrap any later one back to plain text.

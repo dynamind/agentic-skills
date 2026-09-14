@@ -6,7 +6,7 @@ Each entry is prefixed with who raised it. Work that is committed to moves to th
 
 ## Open
 
-- **Name** — the first observation goes here.
+- **Name:** the first observation goes here.
 
 ## Done or dropped
 

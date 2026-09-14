@@ -10,8 +10,8 @@ points back at this file; questions are ephemeral and the pointer would outlive 
 
 ## Open
 
-**Q: Name** — The first question goes here.\
-**A:** —
+**Q (name):** The first question goes here.\
+**A (date):**
 
 ## Answered
 

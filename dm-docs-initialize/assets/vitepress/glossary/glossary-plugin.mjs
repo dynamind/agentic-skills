@@ -1,7 +1,7 @@
 // markdown-it core rule: links the first mention of each glossary term (per
 // page) to its definition and attaches the definition's first sentence as a
 // CSS-only hover/focus tooltip (see theme/custom.css, .glossary-term). No Vue
-// component, no client-side JS — plain <a data-tooltip> and a couple of
+// component, no client-side JS: plain <a data-tooltip> and a couple of
 // pseudo-elements, so it survives static prerendering with zero hydration
 // risk.
 //
@@ -22,14 +22,14 @@ export function glossaryPlugin(md, {terms = [], firstOccurrenceOnly = true} = {}
   md.core.ruler.push('glossary_link', (state) => {
     const relativePath = state.env?.relativePath
     // Container titles (`::: warning <title>`) render through their own
-    // renderInline() pass, a separate core-ruler run from the page body's —
+    // renderInline() pass, a separate core-ruler run from the page body's;
     // stash dedup state on the shared env object, not a call-local Set, so
     // "first occurrence" means first on the page, not first per render call.
     // VitePress renders each page's markdown more than once per build (e.g.
-    // once for content, once while resolving page data) — each call gets its
+    // once for content, once while resolving page data); each call gets its
     // own `env`, so per-page "first occurrence" can't be enforced here.
     // Scoping to env is still worth doing (it cuts down what the final,
-    // definitely-once-per-page cleanup in transformHtml — see config.mts —
+    // definitely-once-per-page cleanup in transformHtml (see config.mts)
     // has to remove) but is not itself the correctness guarantee.
     const env = state.env ?? {}
     const used = (env.__glossaryUsed ??= new Set())
@@ -85,7 +85,7 @@ export function glossaryPlugin(md, {terms = [], firstOccurrenceOnly = true} = {}
         afterTok.content = content.slice(m.index + m[1].length)
 
         children.splice(i, 1, beforeTok, openTok, textTok, closeTok, afterTok)
-        // Resume scanning at afterTok — the remainder of this text node may
+        // Resume scanning at afterTok; the remainder of this text node may
         // still contain a different, still-unused term.
         i += 3
       }

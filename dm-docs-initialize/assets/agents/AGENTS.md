@@ -1,4 +1,4 @@
-# AGENTS.md — {{SITE_NAME}}
+# AGENTS.md: {{SITE_NAME}}
 
 Read by Claude Code, Cursor, Codex, and any other agentic tool. This file is the index and
 the always-on rules. **Read the linked module before working in its area.** The modules
@@ -10,7 +10,7 @@ carry the detail; this file deliberately does not.
 (proof of concept, product in production, frozen legacy). One paragraph per top-level
 directory that an agent will work in. Write code accordingly. -->
 
-**`/docs`** — a structured guide, how-tos, explanations, ADRs, and product docs. It is
+**`/docs`** is a structured guide, how-tos, explanations, ADRs, and product docs. It is
 written to be read; `docs/guide/index.md` is the entry point. Prefer it over inferring
 intent from code. Built using VitePress. Cite files outside `docs/` in code spans, not
 markdown links. `npm run docs:build` in `docs/` finds the dead links.
