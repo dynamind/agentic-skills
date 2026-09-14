@@ -1,11 +1,6 @@
----
-name: dm-map-module-boundaries
-description: "Map and reshape module boundaries so a change fits in one bounded context. TRIGGER when the user asks where something should live, how to split or carve up a subsystem, why a change keeps touching many packages, or says 'this is too coupled', 'module boundaries', 'hidden coupling', 'which layer owns this'. Also use before a refactor that spans 3+ packages. SKIP for single-module edits and for defining the API of one module (use dm-contract-first-modules)."
----
+# Boundary Brief
 
-# Map Module Boundaries
-
-Use this skill to make a codebase easier for agents and humans to reason about by aligning module boundaries with reasoning boundaries.
+Reference loaded by `dm-bounded-agent-work` when the module boundary for a change is unclear, the change spans several packages, or hidden consumers may exist. Aligns module boundaries with reasoning boundaries so the change fits one bounded context.
 
 ## Boundary Map
 

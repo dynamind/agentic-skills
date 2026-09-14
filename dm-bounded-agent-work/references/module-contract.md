@@ -1,11 +1,6 @@
----
-name: dm-contract-first-modules
-description: "Design or repair a module's contract before touching its internals. TRIGGER when creating a new module, service, plugin, or adapter; when changing an API, event, schema, message shape, or integration between two components; or when the user says 'interface', 'contract', 'API design', 'what should this expose', 'schema change', 'breaking change'. SKIP when the boundary is fixed and only internals change, and for deciding where boundaries go (use dm-map-module-boundaries)."
----
+# Module Contract
 
-# Contract-First Modules
-
-Use this skill to make module boundaries honest enough that an agent can trust the contract instead of reconstructing behavior from both sides.
+Reference loaded by `dm-bounded-agent-work` when a change crosses a module boundary or alters an API, event, schema, message shape, or integration. Makes the boundary honest enough that an agent can trust the contract instead of reconstructing behaviour from both sides.
 
 ## Contract Checklist
 

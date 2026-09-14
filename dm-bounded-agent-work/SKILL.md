@@ -1,11 +1,11 @@
 ---
 name: dm-bounded-agent-work
-description: "Turn a software request into bounded, verifiable tasks before coding. TRIGGER before any change likely to touch 3+ files or several modules, and whenever the user says 'plan this', 'how should we approach', 'split this up', 'break this down', 'scope', 'what's the first step', or hands over a vague or large feature request. This is the entry point for planning; it routes to dm-map-module-boundaries, dm-contract-first-modules, and dm-understandability-review as needed. SKIP for one-file fixes, questions, and work the user has already scoped precisely."
+description: "Plan a software change as bounded, verifiable work before coding, including mapping module boundaries and defining the contract when the change crosses one. TRIGGER before any change likely to touch 3+ files or several modules; when the user says 'plan this', 'how should we approach', 'split this up', 'break this down', 'scope', 'what's the first step'; when they ask where something should live, why a change keeps touching many packages, or say 'too coupled', 'module boundaries', 'hidden coupling', 'which layer owns this'; or when creating a module, service, plugin, or adapter, or changing an API, event, schema, or integration ('interface', 'contract', 'API design', 'breaking change'). SKIP for one-file fixes, plain questions, work the user has already scoped precisely, and post-implementation review (use dm-understandability-review)."
 ---
 
 # Bounded Agent Work
 
-Use this skill to shape work so the required context approximately matches what an agent can safely load and verify.
+Use this skill to shape work so the required context approximately matches what an agent can safely load and verify. It is the single planning entry point: boundary mapping and contract design live in `references/` and are loaded only when the task calls for them.
 
 ## Task Frame
 
@@ -28,6 +28,17 @@ Scale process to stakes:
 - **High**: auth, payments, migrations, data loss, security, concurrency, public APIs, cross-module contracts, or unclear ownership. Add explicit contract review, broader tests, rollback thinking, and human decision points.
 
 Do not turn every task into a ceremony. Preserve conversational momentum.
+
+## Routing
+
+Decide depth from the task frame, then load only what applies:
+
+- **Boundary unclear** (several candidate owner modules, a change that keeps touching many packages, possible hidden consumers, or any refactor spanning 3+ packages): read `references/boundary-brief.md` and produce a Boundary Brief before choosing the slice.
+- **Crossing a contract** (new module, service, plugin, or adapter; a changed API, event, schema, message shape, or integration; or any High-rigor task): read `references/module-contract.md` and write the Module Contract before implementation.
+- **Ambiguous requirement or diagnosis**: use `dm-hypothesis-space-reasoning`; when the reason for the work itself is in question, use `dm-problem-solution-provenance`.
+- **After implementation** of a Standard or High task: run `dm-understandability-review` as the verification step.
+
+A Light task loads no references. Do not produce a Boundary Brief or Module Contract for a change that stays inside one clear module.
 
 ## Stop Conditions
 
@@ -70,4 +81,4 @@ Verification:
 Decision needed:
 ```
 
-For small tasks, collapse this to one or two sentences and proceed.
+For small tasks, collapse this to one or two sentences and proceed. Attach the Boundary Brief or Module Contract beneath the plan when Routing produced one.

@@ -1,4 +1,4 @@
 interface:
   display_name: "Bounded Agent Work"
-  short_description: "Plan agent tasks with bounded evidence and risk"
+  short_description: "Plan bounded agent tasks, map boundaries, define contracts"
   default_prompt: "Use $dm-bounded-agent-work to turn this request into agent-sized work."
