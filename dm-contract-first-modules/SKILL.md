@@ -1,6 +1,6 @@
 ---
 name: dm-contract-first-modules
-description: Design or repair module contracts before changing internals. Use when creating a module, changing an integration, defining APIs, events, schemas, service boundaries, plugin surfaces, adapters, or tests that should let agents reason about one side of a boundary without reading the other.
+description: "Design or repair a module's contract before touching its internals. TRIGGER when creating a new module, service, plugin, or adapter; when changing an API, event, schema, message shape, or integration between two components; or when the user says 'interface', 'contract', 'API design', 'what should this expose', 'schema change', 'breaking change'. SKIP when the boundary is fixed and only internals change, and for deciding where boundaries go (use dm-map-module-boundaries)."
 ---
 
 # Contract-First Modules

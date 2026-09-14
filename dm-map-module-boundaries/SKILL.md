@@ -1,6 +1,6 @@
 ---
 name: dm-map-module-boundaries
-description: Map, evaluate, and reshape software module boundaries so coding agents can reason within bounded context. Use when analyzing a large codebase, planning a feature or refactor, splitting a subsystem, reducing nonlocal reasoning, identifying hidden coupling, or deciding whether a change fits inside one module or crosses contracts.
+description: "Map and reshape module boundaries so a change fits in one bounded context. TRIGGER when the user asks where something should live, how to split or carve up a subsystem, why a change keeps touching many packages, or says 'this is too coupled', 'module boundaries', 'hidden coupling', 'which layer owns this'. Also use before a refactor that spans 3+ packages. SKIP for single-module edits and for defining the API of one module (use dm-contract-first-modules)."
 ---
 
 # Map Module Boundaries

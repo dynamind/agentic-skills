@@ -1,6 +1,6 @@
 ---
 name: dm-new-project
-description: "Scaffold Roy Willemse's preferred full-stack monorepo starter: Java 21 Quarkus backend, Vite/Vue 3 frontend, Maven-packaged static frontend, hardened npm settings, docs for human and agent onboarding, ADR structure, Terraform infra placeholders, and Azure DevOps pipeline skeletons. Use when starting a new project or creating a repo template in this style."
+description: "Scaffold Roy Willemse's standard full-stack monorepo: Java 21 Quarkus backend, Vite/Vue 3 frontend packaged into Maven, hardened npm settings, human and agent onboarding docs, ADRs, Terraform placeholders, Azure DevOps pipeline skeletons. TRIGGER when the user says 'new project', 'start a repo', 'scaffold', 'bootstrap', 'project template', 'greenfield', or asks to create a project in this stack. SKIP when adding to an existing repository."
 ---
 
 # DM New Project

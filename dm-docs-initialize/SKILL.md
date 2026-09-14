@@ -1,6 +1,6 @@
 ---
 name: dm-docs-initialize
-description: Initialize or restructure a repository documentation system for progressive human and agent onboarding, including an out-of-the-box Material for MkDocs site. Use when creating a documentation tree, configuring MkDocs, adding navigation and a landing page, establishing three-digit ADR conventions, enabling Mermaid diagrams, defining metadata and authority conventions, or introducing page templates in a new or existing repository. Do not use to populate the corpus from source evidence; use dm-docs-ingest for that.
+description: "Set up or restructure a repository documentation system with Material for MkDocs, progressive onboarding, three-digit ADRs, Mermaid, and page templates. TRIGGER when the user says 'set up docs', 'add mkdocs', 'create a docs folder', 'ADR structure', 'documentation skeleton', 'restructure the docs tree', or a repo has no docs system yet and one is requested. SKIP for filling pages with content from code (dm-docs-ingest) and for fixing existing docs (dm-docs-garden)."
 ---
 
 # DM Docs Initialize

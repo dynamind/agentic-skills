@@ -1,6 +1,6 @@
 ---
 name: dm-bounded-agent-work
-description: Turn software requests into bounded, verifiable tasks that fit agent reasoning limits. Use when planning agentic coding work, splitting large changes, choosing how much context to load, deciding whether to ask questions, selecting verification, or scaling rigor by risk without introducing heavy process ceremony.
+description: "Turn a software request into bounded, verifiable tasks before coding. TRIGGER before any change likely to touch 3+ files or several modules, and whenever the user says 'plan this', 'how should we approach', 'split this up', 'break this down', 'scope', 'what's the first step', or hands over a vague or large feature request. This is the entry point for planning; it routes to dm-map-module-boundaries, dm-contract-first-modules, and dm-understandability-review as needed. SKIP for one-file fixes, questions, and work the user has already scoped precisely."
 ---
 
 # Bounded Agent Work

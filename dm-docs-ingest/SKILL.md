@@ -1,6 +1,6 @@
 ---
 name: dm-docs-ingest
-description: Populate or revise repository documentation from bounded source evidence such as code, tests, configuration, schemas, ADRs, runbooks, release history, legacy documents, wiki exports, and stakeholder-provided material. Use when documenting a subsystem, migrating existing documentation into a new tree, reconciling multiple sources, or building trustworthy onboarding material with traceable evidence. Do not use for empty-tree scaffolding or general documentation cleanup.
+description: "Write or revise repository documentation from concrete source evidence: code, tests, config, schemas, ADRs, runbooks, release history, wiki exports, stakeholder notes. TRIGGER when the user says 'document this module', 'write docs for', 'add to the docs', 'onboarding doc', 'migrate the wiki', 'explain this subsystem in the docs', or points at existing material to fold into the docs. SKIP for setting up an empty docs tree or MkDocs (dm-docs-initialize) and for tidying existing pages (dm-docs-garden)."
 ---
 
 # DM Docs Ingest

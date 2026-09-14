@@ -1,6 +1,6 @@
 ---
 name: dm-hypothesis-space-reasoning
-description: Reason under ambiguity by expanding, comparing, and reducing multiple plausible hypotheses. Use when a question is under-specified, an engineering diagnosis has several viable explanations, a model would otherwise give a premature answer, or certainty should be expressed as hypothesis coverage rather than a single confidence score.
+description: "Diagnose or decide under ambiguity by holding several hypotheses open, comparing them, and ruling them out with evidence. TRIGGER when the user asks 'why does this happen', 'what's causing', 'investigate', 'debug', 'figure out', reports a bug or flaky behaviour without a known cause, or asks an under-specified question with several plausible readings. Also use when you notice yourself about to commit to a single explanation early. SKIP when the cause is already established or the question has one obvious answer."
 ---
 
 # Hypothesis-Space Reasoning

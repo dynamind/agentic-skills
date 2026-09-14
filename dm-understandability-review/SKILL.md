@@ -1,6 +1,6 @@
 ---
 name: dm-understandability-review
-description: Review code, designs, tests, or architecture for how reliably humans and agents can infer correct behavior. Use when evaluating module design, large-codebase maintainability, hidden coupling, confusing tests, plausible reasoning errors, closed-world assumptions, or whether a change is safe for agentic implementation.
+description: "Review code, tests, or a design for how reliably a human or agent can infer correct behaviour from it. TRIGGER when the user says 'review this', 'is this readable', 'is this maintainable', 'code review', 'look over this branch/PR', 'is this safe to hand to an agent', 'confusing test', or asks whether a change is clear enough. Run it as part of dm-bounded-agent-work's verification step for risky changes. SKIP for pure comment quality (dm-comment-discipline) and for bug hunting alone."
 ---
 
 # Understandability Review

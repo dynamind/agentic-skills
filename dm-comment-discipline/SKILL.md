@@ -1,6 +1,6 @@
 ---
 name: dm-comment-discipline
-description: Review code comment blocks touched by a bounded diff, or every comment in explicitly named current-state files, for concise present-tense intent and short rationale. Use for comment-quality reviews of commits, branches, PRs, diffs, or specified files; never scan unrelated files.
+description: "Review code comments in a diff or named files for concise, present-tense intent with short rationale. TRIGGER when the user says 'review the comments', 'check comments', 'clean up comments', 'comment quality', or asks for a review of a commit, branch, PR, or diff and comments are in scope; also before committing when the diff adds or edits comment blocks. Only look at comments touched by the diff or in files the user names; never scan unrelated files. SKIP when the review is about behaviour or bugs rather than comments."
 ---
 
 # Comment Discipline Review

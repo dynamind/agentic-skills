@@ -1,6 +1,6 @@
 ---
 name: dm-docs-garden
-description: Audit, synchronize, and improve an existing repository documentation corpus while preserving authoritative facts and useful history. Use when checking documentation health, reconciling docs after code changes, repairing navigation and links, finding stale or contradictory pages, reducing harmful duplication, splitting mixed-purpose pages, improving progressive disclosure, or archiving superseded material. Audit without editing when the user asks only for review or diagnosis.
+description: "Audit and repair an existing documentation corpus without losing authoritative facts. TRIGGER when the user says 'docs are stale', 'sync the docs', 'check the documentation', 'broken links', 'update docs after this change', 'docs cleanup', 'are the docs still right', or asks about documentation health or duplication. Audit only, no edits, when the user asks just for a review or diagnosis. SKIP for creating a docs tree from scratch (dm-docs-initialize) or writing new pages from code (dm-docs-ingest)."
 ---
 
 # DM Docs Garden

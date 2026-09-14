@@ -1,6 +1,6 @@
 ---
 name: dm-problem-solution-provenance
-description: Trace why work exists by mapping goals, experienced problems, decomposed sub-problems, candidate solutions, trade-offs, and problems introduced by each solution. Use when evaluating feature requests, architecture choices, roadmap items, operational changes, or competing approaches; when asking "what does this solve?"; when a proposed fix may create consequential follow-up work; or when changing an upstream solution could invalidate an entire downstream problem tree.
+description: "Trace why work exists: goal, experienced problem, sub-problems, candidate solutions, trade-offs, and the new problems each solution creates. TRIGGER when the user asks 'what does this actually solve', 'why are we doing this', 'is this worth it', 'should we build X or Y', evaluates a feature request, roadmap item, or architecture choice, or proposes a fix that may cause follow-up work. Also use before removing or replacing an upstream decision that other work depends on. SKIP for implementation of an already-justified change."
 ---
 
 # Problem-Solution Provenance
