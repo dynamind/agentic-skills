@@ -4,6 +4,13 @@ An existing repository with little or no documentation gets a first pass: the or
 pages, written from evidence, with uncertainty marked. One session can produce a site a
 newcomer can read in an afternoon. Deeper per-subsystem work is `dm-docs-ingest`.
 
+## Before writing
+
+Read `assets/agents/writing-guide.md`. Every page in the pass is written in Simplified
+Technical English with US spelling from the first draft: short sentences, active voice, one
+term for one thing, no metaphor. The rules in `SKILL.md`, Writing rules, apply to every
+sentence below.
+
 ## Evidence, in order of authority
 
 1. **The code** in the repository, including build files, configuration per environment,

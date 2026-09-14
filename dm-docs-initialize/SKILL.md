@@ -9,9 +9,39 @@ Establish the living-documentation system: a docs site written for humans first,
 layer written for tools first, and the registers that hold what does not yet belong to a
 page. Do not state facts that have not been investigated.
 
+## Writing rules
+
+Every page, register entry, `AGENTS.md`, and handoff this skill produces obeys these rules
+from the first draft. Read `assets/agents/writing-guide.md` in full before writing the first
+page; it is the complete rule set and is also what the scaffold installs as
+`.agents/writing-guide.md`. The short form:
+
+- **Simplified Technical English, US spelling.** Short sentences. One idea per sentence.
+  Active voice. Plain words. One term for one thing. No metaphor, idiom, or rhetoric.
+- **English**, unless the user says otherwise. Domain terms stay in the language the
+  business speaks and go in the glossary.
+- **Open with what the reader gets.** A page starts with what it covers and who it is for,
+  not with history or a definition.
+- **No frontmatter on content pages.** State in the page: `## Status` on an ADR, a dated
+  blockquote on a snapshot, `**Status:**` and `**Evidence basis:**` lines on a persona.
+- **Mark what is not confirmed.** A fact from a single unconfirmed source ends with
+  *(unverified)*. A verified fact names its source. No `TODO`, no `needs-review`.
+- **No ticket IDs** in docs. A link to the backlog is allowed.
+- **Links inside `docs/` are relative markdown links ending in `.md`.** Files outside
+  `docs/` are cited in code spans, never linked.
+- **Headings are short noun phrases** with a colon where a divider is needed, never an
+  em-dash. No em-dashes anywhere; use a colon, a comma, or two sentences.
+- **Tables for parallel facts, prose for argument.** A list item is one or two sentences.
+- **Mermaid only, theme-neutral.** No fill, hex color, `style`, `classDef` color, or
+  `%%{init}`. A node is a bold name plus at most one qualifier.
+- **Registers keep their format.** Insert in the open section, in the file's own format.
+  Never append at the bottom.
+- **Commit messages**, when the user asks for one: the subject says what changed, the body
+  carries only what the diff cannot show, the ticket key at the end of the subject only.
+
 ## Workflow
 
-1. **Inspect the repository.**
+1. **Inspect the repository.** Read `assets/agents/writing-guide.md` first (see Writing rules).
    - Read `README.md`, `CLAUDE.md`, `AGENTS.md`, any `.cursorrules` or copilot file, and
      every existing docs folder, wiki export, ADR, and runbook.
    - Identify the project profile: active product, proof of concept, or frozen legacy app
@@ -74,6 +104,8 @@ page. Do not state facts that have not been investigated.
 - Do not run `npm` against the repository root. Always `--prefix docs` or `cd docs &&`.
 - Do not overwrite a `CLAUDE.md` that has content. Fold it.
 - Do not make this skill a prerequisite for ingestion or gardening.
+- Do not write a page and fix its language afterward. The first draft follows the writing
+  rules; a rewrite pass is not part of the workflow.
 
 ## Resources
 
