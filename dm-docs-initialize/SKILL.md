@@ -1,89 +1,110 @@
 ---
 name: dm-docs-initialize
-description: "Set up or restructure a repository documentation system with Material for MkDocs, progressive onboarding, three-digit ADRs, Mermaid, and page templates. TRIGGER when the user says 'set up docs', 'add mkdocs', 'create a docs folder', 'ADR structure', 'documentation skeleton', 'restructure the docs tree', or a repo has no docs system yet and one is requested. SKIP for filling pages with content from code (dm-docs-ingest) and for fixing existing docs (dm-docs-garden)."
+description: "Set up a repository's living-documentation system: a VitePress docs site with role-based entry points, three-digit ADRs, an exceptions register, ideas and questions registers, a glossary, theme-neutral Mermaid, plus the agent layer (AGENTS.md index, CLAUDE.md, .agents/ modules with the writing guide). Includes the brownfield first pass that writes orientation pages from code, wiki, and chat evidence with uncertainty marked. TRIGGER when the user says 'set up docs', 'add vitepress', 'create a docs folder', 'ADR structure', 'documentation skeleton', 'restructure the docs tree', 'first documentation pass', 'document this brownfield repo', 'add AGENTS.md', or a repo has no docs system and one is requested. SKIP for documenting one subsystem in depth (dm-docs-ingest) and for fixing existing docs (dm-docs-garden)."
 ---
 
 # DM Docs Initialize
 
-Establish a durable, topic-first documentation system without pretending to know facts that have not been investigated.
+Establish the living-documentation system: a docs site written for humans first, an agent
+layer written for tools first, and the registers that hold what does not yet belong to a
+page. Do not state facts that have not been investigated.
 
 ## Workflow
 
-1. Inspect the repository before proposing a tree.
-   - Read repository instructions and existing documentation configuration.
-   - Identify existing docs, generated references, ADRs, runbooks, release notes, and archives.
-   - Preserve local terminology. Inventory established paths without assuming they must remain authoritative.
-2. Resolve initialization decisions before moving or generating files.
-   - Identify the existing documentation generator from repository configuration. If none exists and the user has no preference, default to Material for MkDocs.
-   - Ask whether to **consolidate** scattered documentation into the tree or **route in place**. Default to consolidation for this suite, but do not relocate files without making the choice visible.
-   - Ask where authoritative documentation should live. Default to the docs tree; keep the root `README.md` as a thin signpost and `AGENTS.md` as root agent instructions.
-   - Confirm the ADR scheme. Default to one file per ADR under `docs/architecture/adrs/` using `NNN-short-kebab-title.md`, with `000` reserved for the convention.
-   - Read [references/migration-and-authority.md](references/migration-and-authority.md) before reorganizing existing documentation.
-3. Define the documentation contract.
-   - Separate current, explanatory, generated, proposed, historical, and superseded material.
-   - Define page purpose, audience, document type, authority, lifecycle, owner, review date, and evidence links.
-   - Use `lifecycle`, not `status`; Material for MkDocs reserves `status` for navigation badges.
-   - Treat Diataxis as a page-level writing discipline, not a mandatory top-level taxonomy.
-   - Read [references/documentation-model.md](references/documentation-model.md) before designing or changing the tree.
-   - Read [references/mkdocs-material.md](references/mkdocs-material.md) before creating or changing MkDocs, Mermaid, or ADR configuration.
-4. Design recognizable navigation.
-   - Use a landing page to route readers by intent.
-   - Prefer topic names readers actively seek, such as `Architecture`, `Operations`, and `Reference`.
-   - Keep `Overview` for orientation and `Getting Started` for first successful action.
-   - Keep `Archive` visibly separate from current material.
-   - Label a section's `index.md` as `Overview` in navigation. When the section itself is named `Overview`, use `Introduction` for its index. Never produce doubled labels such as `Architecture > Architecture` or `Overview > Overview`.
-5. Create only the justified structure.
-   - For a conventional baseline, run `python3 scripts/scaffold_docs.py --root <repository> --site-name "<name>"`.
-   - Use `--dry-run` first in a populated repository.
-   - Never pass `--overwrite` unless the user explicitly authorizes replacing scaffold-owned files.
-   - Preserve and adapt an existing `mkdocs.yml`; never replace it merely to impose the baseline.
-   - Customize or create files directly when an existing documentation tool or structure makes the baseline unsuitable.
-6. Consolidate or connect existing material according to the selected mode.
-   - In consolidation mode, create an old-to-new path map, use `git mv` for tracked files, rewire repository links and MkDocs navigation, and mark relocated but unverified pages `lifecycle: needs-review` with a temporary migration notice.
-   - Keep only `README.md` and `AGENTS.md` as root-level narrative documentation by default. Rewrite the README as a stable signpost after its facts have authoritative destinations in the docs tree.
-   - In route-in-place mode, state which external paths remain authoritative and link to them semantically; do not create shadow copies.
-   - Relocate content losslessly during initialization. Hand substantive reconciliation and rewriting to `dm-docs-ingest`.
-7. Connect the structure.
-   - Make the landing page the explicit entry point.
-   - Add semantic links that state why the destination is relevant.
-   - Ensure each empty section says what belongs there; do not generate fake product content.
-8. Set up MkDocs when selected.
-   - Detect with `python3 -m mkdocs --version` and `python3 -m pip show mkdocs mkdocs-material`.
-   - Prefer `python3 -m pip`; use `pip3` only when the Python module form is unavailable. Never use bare `pip` on a machine where it may select a legacy interpreter.
-   - Run `python3 -m pip install -r requirements-docs.txt` only with explicit authorization because it downloads and installs packages.
-   - Use Material's native Mermaid integration; do not add `mkdocs-mermaid2-plugin`.
-9. Verify the result.
-   - Confirm existing material was preserved or moved according to the recorded path map.
-   - Check links, navigation configuration, and build commands when available.
-   - Run `python3 -m mkdocs build --strict` from the repository root when MkDocs is configured.
-   - Report created structure, preserved content, deliberate deviations, and remaining decisions.
+1. **Inspect the repository.**
+   - Read `README.md`, `CLAUDE.md`, `AGENTS.md`, any `.cursorrules` or copilot file, and
+     every existing docs folder, wiki export, ADR, and runbook.
+   - Identify the project profile: active product, proof of concept, or frozen legacy app
+     maintained by few people. The profile decides which sections apply and whether ADRs
+     are written now.
+   - Identify the existing docs generator, if any. Check Node availability
+     (`node --version`, npm 11.10 or later for `min-release-age`).
+   - Preserve local terminology and the language of domain terms.
+2. **Settle the decisions.** Read [references/migration-and-authority.md](references/migration-and-authority.md).
+   - Consolidate scattered documents into `docs/` or route in place. Default: consolidate.
+     Present the old-to-new map before moving anything.
+   - Site name, dev port, backlog URL, ticket key pattern.
+   - Whether the agent layer is created now. Default: yes. An existing `CLAUDE.md` with
+     content is folded, never overwritten; see [references/agent-layer.md](references/agent-layer.md).
+3. **Scaffold.** Read [references/documentation-model.md](references/documentation-model.md)
+   and [references/vitepress.md](references/vitepress.md).
+   - Run `python3 scripts/scaffold_docs.py --root <repo> --site-name "<name>" --dry-run`,
+     then without `--dry-run`. It is additive: existing files are reported, not replaced.
+     Pass `--overwrite` only when the user says so.
+   - Adapt an existing VitePress config instead of replacing it. Another generator that
+     governs the corpus stays unless the user wants to switch; then record the switch.
+   - The scaffold creates only pages with content: home, introduction, glossary, the three
+     registers, the architecture overview. Sections grow when pages land. No empty index
+     pages, no placeholder ADRs.
+4. **Build the agent layer.**
+   - `AGENTS.md` from the template: what this is, the *You are… / Read* table, always-on
+     rules, stop-and-ask, keeping-this-honest. Fill *What this is* from evidence only.
+   - `CLAUDE.md` is `@AGENTS.md`. `.agents/writing-guide.md` is always present.
+     `.agents/decisions.md` when the project has decisions. Other modules when an area has
+     rules a task must not override.
+5. **Consolidate existing material** in the chosen mode: `git mv`, sidebar entries, link
+   rewiring, a dated *Moved* notice on pages whose facts are not yet re-checked.
+6. **Run the brownfield first pass when asked**, or when the repository has no docs and
+   the user wants a first version. Read [references/brownfield-first-pass.md](references/brownfield-first-pass.md).
+   Write the orientation pages from code, mirrored wiki pages, and digests, in the listed
+   order, and stop when the evidence runs out. Mark single-source facts *(unverified)*.
+   Put every gap that needs a human in `docs/product/questions.md`. Findings go in
+   `docs/architecture/hazards.md`.
+7. **Verify.**
+   - `npm --prefix docs install` (ask before the first install), then
+     `npm --prefix docs run docs:build`. The build fails on dead relative links.
+   - Every page is in the sidebar. A term from the glossary is linked and shows its tooltip
+     on a page that mentions it. Mermaid diagrams are theme-neutral and render in light
+     and dark. `docs/node_modules/`, `docs/.vitepress/cache/`, `docs/.vitepress/dist/`
+     are git-ignored.
+   - Moved files kept their history. The old-to-new map matches the tree.
+   - Propose a CI step that builds the docs first and fails fast.
+8. **Hand off.** Do not commit; the user reviews first.
 
 ## Boundaries
 
-- Do not populate architecture, features, or operations from superficial repository guesses.
-- Do not silently choose preservation-in-place. Resolve consolidation versus routing before restructuring.
-- Do not force every page into one Diataxis category. Use `decision`, `runbook`, `landing`, `release`, and `roadmap` when those contracts are clearer.
-- Do not make this skill a prerequisite for ingestion or gardening. Adapt to an existing corpus when one already exists.
-- Keep ADRs under `docs/architecture/adrs/` with `NNN-kebab-case-title.md`; reserve `000` for the ADR convention.
-- Use Mermaid for diagrams and avoid fixed inline colors or themes that fail across light and dark palettes.
-- Keep product, setup, configuration, architecture, development, and operations facts authoritative inside the docs tree unless the user selects another policy.
+- Do not populate architecture, features, or operations from class names or endpoint
+  names. Evidence or *(unverified)*.
+- Do not create empty sections, index-only pages, or placeholder ADRs. A comment in a
+  scaffolded page says what belongs there.
+- Do not add frontmatter to content pages. State in the page: `## Status` on an ADR, a
+  dated blockquote on a snapshot, *(unverified)* on a fact.
+- Do not weaken a decision to match reality. Register the deviation as `EX-nnn`.
+- Do not write ticket IDs in docs. The backlog link is allowed.
+- Do not run `npm` against the repository root. Always `--prefix docs` or `cd docs &&`.
+- Do not overwrite a `CLAUDE.md` that has content. Fold it.
+- Do not make this skill a prerequisite for ingestion or gardening.
 
 ## Resources
 
-- Use `scripts/scaffold_docs.py` for an additive Material for MkDocs baseline; pass `--without-mkdocs` only when another generator governs the corpus.
-- Copy or adapt templates from `assets/page-templates/`; do not publish unused templates as product documentation.
-- Read [references/documentation-model.md](references/documentation-model.md) for the default information architecture, metadata model, repetition rules, and customization decisions.
-- Read [references/mkdocs-material.md](references/mkdocs-material.md) for generated files, dependency installation, navigation, Mermaid, ADR, and validation conventions.
-- Read [references/migration-and-authority.md](references/migration-and-authority.md) for consolidation, path mapping, `git mv`, migration notices, link rewiring, root exceptions, and the initialize/ingest boundary.
+- `scripts/scaffold_docs.py`: additive scaffold of the VitePress site and the agent layer.
+  `--dry-run`, `--overwrite`, `--without-agents`, `--port`, `--backlog-url`.
+- `assets/vitepress/`: `package.json`, `.npmrc`, `config.mts`, theme, and the `glossary/`
+  build-time plugin that links term mentions to `docs/glossary.md` with tooltips.
+- `assets/pages/`: templates per page kind (home, introduction, glossary, registers,
+  ADR, how-to, explanation, feature, persona, hazards, reference mirror, conventions).
+  Copy the shape, not the placeholder text.
+- `assets/agents/`: `AGENTS.md`, `CLAUDE.md`, `.agents/writing-guide.md`,
+  `.agents/decisions.md`.
+- [references/documentation-model.md](references/documentation-model.md): the tree, page
+  kinds and contracts, registers, glossary, metadata, links, diagrams.
+- [references/agent-layer.md](references/agent-layer.md): `AGENTS.md` section by section,
+  where a fact goes, folding an existing `CLAUDE.md`.
+- [references/vitepress.md](references/vitepress.md): files, npm rules, config decisions,
+  sidebar, verification, CI.
+- [references/brownfield-first-pass.md](references/brownfield-first-pass.md): evidence
+  order, the page set, uncertainty marking, mirrors, hazards.
+- [references/migration-and-authority.md](references/migration-and-authority.md):
+  consolidate or route in place, authority, initialize versus ingest.
 
 ## Handoff
 
 Conclude with:
 
-- documentation entry point;
-- created and preserved paths;
-- consolidation or route-in-place mode and the old-to-new path map;
-- authoritative documentation location and root-level exceptions;
-- chosen conventions and deviations;
-- unresolved ownership or tooling decisions;
-- a bounded next ingestion slice suitable for `dm-docs-ingest`.
+- the entry points: `docs/guide/index.md` and `AGENTS.md`;
+- created, moved, and preserved paths, with the old-to-new map;
+- the consolidation mode and any path that stays authoritative outside the tree;
+- what the first pass wrote, and the count of *(unverified)* marks and open questions;
+- deviations from the model and why;
+- unresolved decisions (hosting, CI step, brand color, backlog link);
+- a bounded next slice for `dm-docs-ingest`.

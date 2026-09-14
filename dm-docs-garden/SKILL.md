@@ -18,17 +18,17 @@ Use the narrowest mode matching the request. Never turn a read-only audit into a
 ## Workflow
 
 1. Establish the documentation contract.
-   - Read repository instructions, `mkdocs.yml` when present, landing page, navigation, metadata conventions, glossary, and archive policy.
+   - Read `AGENTS.md` and its modules, `docs/.vitepress/config.mts` when present, landing page, sidebar, the writing guide, glossary, and archive policy.
    - Identify generated and externally owned documentation that must not be hand-edited.
 2. Bound the inspection.
    - For synchronization, start from the changed behavior and search outward to affected consumers and pages.
    - For gardening, name the section, quality concern, or traversal path under review.
-   - For a broad health check, run `python3 scripts/inspect_docs.py <docs-directory>` as supporting evidence, not as the whole review. It checks MkDocs entrypoints, ADR filenames and identifiers, Mermaid conventions, links, metadata, titles, and traversal.
+   - For a broad health check, run `python3 scripts/inspect_docs.py <docs-directory>` as supporting evidence, not as the whole review. It checks the entry point, VitePress sidebar coverage, ADR filenames and identifiers, Mermaid conventions, links, legacy frontmatter, titles, and traversal.
 3. Collect evidence.
    - Inspect relevant code, tests, configuration, operational material, and history before declaring a page stale.
    - Read [references/health-checks.md](references/health-checks.md) for the quality dimensions and severity model.
 4. Diagnose before changing.
-   - Distinguish incorrect facts, missing facts, poor placement, weak links, obsolete lifecycle, and stylistic preference.
+   - Distinguish incorrect facts, missing facts, poor placement, weak links, stale snapshots or *(unverified)* marks, and stylistic preference.
    - Distinguish useful narrative repetition from drifting canonical duplication using [references/repetition-and-links.md](references/repetition-and-links.md).
    - State evidence and risk for each material finding.
 5. Repair with the smallest coherent change when authorized.
@@ -39,7 +39,7 @@ Use the narrowest mode matching the request. Never turn a read-only audit into a
    - Add redirects or link repairs when paths change.
 6. Verify.
    - Re-run structural checks and documentation builds.
-   - Run `python3 -m mkdocs build --strict` from the repository root when MkDocs is configured.
+   - Run `npm --prefix docs run docs:build` when VitePress is configured. It fails on dead relative links; it does not check the sidebar.
    - Search for references to renamed or archived pages.
    - Confirm summaries, navigation, metadata, and authority markers agree.
    - Report residual uncertainty and unexamined areas.

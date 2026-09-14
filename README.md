@@ -11,16 +11,14 @@ This repository contains a unified set of skills for making agentic software mor
 
 ### Reasoning
 
-- `dm-map-module-boundaries` maps module boundaries and hidden coupling.
-- `dm-bounded-agent-work` turns requests into agent-sized, verifiable tasks.
-- `dm-contract-first-modules` defines contracts that make boundaries trustworthy.
+- `dm-bounded-agent-work` turns requests into agent-sized, verifiable tasks; it maps module boundaries and defines module contracts when the change crosses one (see its `references/`).
 - `dm-understandability-review` reviews code and designs for hidden behavior and reasoning risk.
 - `dm-hypothesis-space-reasoning` makes ambiguity explicit and reduces plausible hypotheses.
 - `dm-problem-solution-provenance` traces goals, experienced problems, solution options, trade-offs, and consequences.
 
 ### Documentation
 
-- `dm-docs-initialize` establishes a topic-first Material for MkDocs documentation system.
+- `dm-docs-initialize` establishes the living-documentation system: a VitePress docs site with registers and ADRs, plus the `AGENTS.md` agent layer, with a brownfield first pass from evidence.
 - `dm-docs-ingest` creates trustworthy documentation from bounded evidence.
 - `dm-docs-garden` audits, synchronizes, and improves an existing documentation corpus.
 
@@ -28,7 +26,7 @@ See [SUITE.md](SUITE.md) for boundaries, principles, and recommended composition
 
 ## Installation and synchronization
 
-Run the installer from this repository to synchronize all ten skills with the global skill directories used by Codex and Claude Code:
+Run the installer from this repository to synchronize all nine skills with the global skill directories used by Codex and Claude Code:
 
 ```bash
 ./install-skills.sh
@@ -51,8 +49,6 @@ For a large codebase change:
 ```text
 Use $dm-problem-solution-provenance when the requested solution or its consequences need to be challenged.
 Use $dm-bounded-agent-work to define the slice and verification.
-Use $dm-map-module-boundaries to locate the reasoning boundary.
-Use $dm-contract-first-modules if the change crosses a boundary.
 Use $dm-understandability-review before accepting the design or implementation.
 ```
 

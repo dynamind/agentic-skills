@@ -12,19 +12,13 @@ from pathlib import Path
 from urllib.parse import unquote
 
 
-REQUIRED_METADATA = (
-    "purpose",
-    "audience",
-    "doc_type",
-    "authority",
-    "lifecycle",
-    "owner",
-    "last_reviewed",
-)
+# Content pages carry no frontmatter. These keys mark a page still on the old
+# metadata model; state belongs in the page (## Status, a dated blockquote).
+LEGACY_METADATA = ("lifecycle", "authority", "owner", "last_reviewed", "doc_type", "status")
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 SCHEME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
-ADR_NAME_RE = re.compile(r"^(\d{3})-[a-z0-9]+(?:-[a-z0-9]+)*\.md$")
+ADR_NAME_RE = re.compile(r"^(adr-)?(\d{3})-[a-z0-9]+(?:-[a-z0-9]+)*\.md$")
 MERMAID_RE = re.compile(r"```mermaid[ \t]*\n(.*?)```", re.DOTALL | re.IGNORECASE)
 NON_MERMAID_DIAGRAM_RE = re.compile(r"```(?:plantuml|puml|graphviz|dot)[ \t]*\n", re.IGNORECASE)
 MERMAID_INLINE_STYLE_RE = re.compile(
@@ -33,6 +27,9 @@ MERMAID_INLINE_STYLE_RE = re.compile(
 )
 NAV_SECTION_RE = re.compile(r"^  - ([^:]+):\s*$")
 NAV_INDEX_RE = re.compile(r"^      - ([^:]+):\s+.+/index\.md\s*$")
+SIDEBAR_LINK_RE = re.compile(r"""link:\s*['"]([^'"]+)['"]""")
+HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
+TS_COMMENT_RE = re.compile(r"/\*.*?\*/|(?<![:\w])//[^\n]*", re.DOTALL)
 
 
 def parse_args() -> argparse.Namespace:
@@ -60,7 +57,14 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], bool]:
     return {}, False
 
 
+# Never documentation: installed packages, tool caches, a vendored runtime, and
+# the archive that VitePress excludes from the build via srcExclude.
+ALWAYS_SKIPPED_DIRS = {"node_modules", "node", ".vitepress", "archived", "archive", "public"}
+
+
 def excluded(relative: Path, exclusions: tuple[Path, ...]) -> bool:
+    if any(part in ALWAYS_SKIPPED_DIRS or part.startswith(".") for part in relative.parts[:-1]):
+        return True
     return any(relative == item or item in relative.parents for item in exclusions)
 
 
@@ -105,6 +109,31 @@ def add_finding(findings: list[dict[str, str]], severity: str, code: str, path: 
     findings.append({"severity": severity, "code": code, "path": path.as_posix(), "message": message})
 
 
+def inspect_vitepress_sidebar(config: Path, root: Path, files: list[Path], findings: list[dict[str, str]]) -> set[Path]:
+    """Every rendered page must be reachable from the sidebar; VitePress does not check this."""
+    linked: set[Path] = set()
+    config_relative = Path("..") / config.relative_to(root.parent)
+    for link in SIDEBAR_LINK_RE.findall(TS_COMMENT_RE.sub("", config.read_text(encoding="utf-8"))):
+        link = link.split("#", 1)[0]
+        if SCHEME_RE.match(link) or not link.startswith("/"):
+            continue
+        target = link.lstrip("/")
+        if target.endswith("/") or target == "":
+            target += "index"
+        if target.endswith(".html"):
+            target = target[: -len(".html")]
+        page = Path(target + ".md") if not target.endswith(".md") else Path(target)
+        linked.add(page)
+        if not (root / page).is_file():
+            add_finding(findings, "error", "sidebar-dead-link", config_relative, f"Sidebar links to a page that does not exist: {link}")
+    for path in files:
+        relative = path.relative_to(root)
+        if relative in linked or relative.name == "template.md":
+            continue
+        add_finding(findings, "warning", "sidebar-missing", relative, "Page is not in the sidebar; nobody finds it")
+    return linked
+
+
 def inspect_mkdocs_navigation(config: Path, findings: list[dict[str, str]]) -> None:
     section: str | None = None
     for line in config.read_text(encoding="utf-8").splitlines():
@@ -145,7 +174,8 @@ def inspect(root: Path, entrypoint: Path, exclusions: tuple[Path, ...]) -> tuple
 
     for path in files:
         relative = path.relative_to(root)
-        text = path.read_text(encoding="utf-8")
+        # Template hints live in HTML comments; they are not content.
+        text = HTML_COMMENT_RE.sub("", path.read_text(encoding="utf-8"))
 
         if relative.parts[:2] == ("architecture", "adrs") and relative.name != "index.md":
             adr_match = ADR_NAME_RE.fullmatch(relative.name)
@@ -155,10 +185,14 @@ def inspect(root: Path, entrypoint: Path, exclusions: tuple[Path, ...]) -> tuple
                     "error",
                     "adr-name-invalid",
                     relative,
-                    "ADR filename must use NNN-kebab-case-title.md",
+                    "ADR filename must use adr-NNN-kebab-case-title.md",
                 )
             else:
-                adr_identifiers.setdefault(adr_match.group(1), []).append(relative)
+                if not adr_match.group(1):
+                    add_finding(findings, "warning", "adr-name-legacy", relative, "Rename to adr-NNN-kebab-case-title.md")
+                adr_identifiers.setdefault(adr_match.group(2), []).append(relative)
+                if not re.search(r"^## Status\b", text, re.MULTILINE):
+                    add_finding(findings, "warning", "adr-status-missing", relative, "ADR has no ## Status section")
 
         if NON_MERMAID_DIAGRAM_RE.search(text):
             add_finding(
@@ -178,33 +212,16 @@ def inspect(root: Path, entrypoint: Path, exclusions: tuple[Path, ...]) -> tuple
                     "Mermaid diagram contains local styling or theming that may fail across light and dark palettes",
                 )
         metadata, complete = parse_frontmatter(text)
-        if not complete:
-            add_finding(findings, "warning", "frontmatter-missing", relative, "Missing or incomplete YAML frontmatter")
-        else:
-            if "status" in metadata:
-                add_finding(
-                    findings,
-                    "error",
-                    "material-status-collision",
-                    relative,
-                    "Use lifecycle for document state; Material for MkDocs reserves status for navigation badges",
-                )
-            for key in REQUIRED_METADATA:
-                if key not in metadata:
-                    add_finding(findings, "warning", "metadata-missing", relative, f"Missing metadata field: {key}")
-            lifecycle = metadata.get("lifecycle", "")
-            if lifecycle and lifecycle not in {"draft", "current", "needs-review", "archived"}:
+        if complete:
+            legacy = [key for key in LEGACY_METADATA if key in metadata]
+            if legacy:
                 add_finding(
                     findings,
                     "warning",
-                    "lifecycle-invalid",
+                    "frontmatter-legacy-metadata",
                     relative,
-                    f"Unknown lifecycle value: {lifecycle}",
+                    f"Content pages carry no metadata frontmatter ({', '.join(legacy)}); state it in the page",
                 )
-            if metadata.get("owner", "").lower() in {"", "null", "unassigned", "[team or role]"}:
-                add_finding(findings, "info", "owner-unassigned", relative, "Documentation owner is not assigned")
-            if metadata.get("last_reviewed", "").lower() in {"", "null"}:
-                add_finding(findings, "info", "review-date-missing", relative, "Review date is not set")
 
         match = H1_RE.search(text)
         if not match:
@@ -235,11 +252,18 @@ def inspect(root: Path, entrypoint: Path, exclusions: tuple[Path, ...]) -> tuple
             for path in paths:
                 add_finding(findings, "error", "adr-id-duplicate", path, f"ADR identifier {identifier} also appears in: {joined}")
 
+    repository_root = root.parent
+    vitepress_config = next((c for c in (root / ".vitepress" / "config.mts", root / ".vitepress" / "config.ts") if c.is_file()), None)
+    sidebar_pages: set[Path] = set()
+    if vitepress_config is not None:
+        sidebar_pages = inspect_vitepress_sidebar(vitepress_config, root, files, findings)
+
     if entrypoint not in graph:
         add_finding(findings, "error", "entrypoint-missing", entrypoint, "Documentation entrypoint does not exist")
     else:
         reachable: set[Path] = set()
-        queue: deque[Path] = deque([entrypoint])
+        # In a VitePress site the sidebar is the navigation; a page it lists is reached.
+        queue: deque[Path] = deque([entrypoint, *sorted(page for page in sidebar_pages if page in graph)])
         while queue:
             current = queue.popleft()
             if current in reachable:
@@ -250,11 +274,11 @@ def inspect(root: Path, entrypoint: Path, exclusions: tuple[Path, ...]) -> tuple
             if "archive" not in relative.parts and "templates" not in relative.parts:
                 add_finding(findings, "warning", "page-orphaned", relative, f"Not reachable from {entrypoint.as_posix()}")
 
-    repository_root = root.parent
     if (repository_root / "mkdocs.yml").is_file():
         inspect_mkdocs_navigation(repository_root / "mkdocs.yml", findings)
+    if vitepress_config is not None or (repository_root / "mkdocs.yml").is_file():
         for path in sorted(repository_root.glob("*.md")):
-            if path.name not in {"README.md", "AGENTS.md"}:
+            if path.name not in {"README.md", "AGENTS.md", "CLAUDE.md"}:
                 add_finding(
                     findings,
                     "warning",
@@ -294,9 +318,9 @@ def main() -> int:
         add_finding(
             findings,
             "warning",
-            "mkdocs-homepage-readme",
+            "homepage-readme",
             entrypoint,
-            "Use index.md as the MkDocs homepage",
+            "Use index.md as the site homepage",
         )
         counts = Counter(finding["severity"] for finding in findings)
         summary.update(errors=counts["error"], warnings=counts["warning"], info=counts["info"])

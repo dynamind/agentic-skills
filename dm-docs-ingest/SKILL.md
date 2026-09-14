@@ -1,6 +1,6 @@
 ---
 name: dm-docs-ingest
-description: "Write or revise repository documentation from concrete source evidence: code, tests, config, schemas, ADRs, runbooks, release history, wiki exports, stakeholder notes. TRIGGER when the user says 'document this module', 'write docs for', 'add to the docs', 'onboarding doc', 'migrate the wiki', 'explain this subsystem in the docs', or points at existing material to fold into the docs. SKIP for setting up an empty docs tree or MkDocs (dm-docs-initialize) and for tidying existing pages (dm-docs-garden)."
+description: "Write or revise repository documentation from concrete source evidence: code, tests, config, schemas, ADRs, runbooks, release history, wiki exports, stakeholder notes. TRIGGER when the user says 'document this module', 'write docs for', 'add to the docs', 'onboarding doc', 'migrate the wiki', 'explain this subsystem in the docs', or points at existing material to fold into the docs. SKIP for setting up an empty docs tree, the VitePress site, or the agent layer (dm-docs-initialize) and for tidying existing pages (dm-docs-garden)."
 ---
 
 # DM Docs Ingest
@@ -14,7 +14,7 @@ Turn bounded evidence into trustworthy documentation while preserving conflicts,
    - Identify intended readers and the decisions or tasks the result must support.
    - Avoid repository-wide ingestion in one pass unless the corpus is genuinely small.
 2. Discover local documentation rules.
-   - Read repository instructions, `mkdocs.yml` when present, the documentation landing page, navigation, metadata conventions, glossary, and nearby pages.
+   - Read `AGENTS.md` and its modules, `docs/.vitepress/config.mts` when present, the documentation landing page, the sidebar, the writing guide, glossary, and nearby pages.
    - Preserve established vocabulary and page authority.
    - If no contract exists, apply the fallback model in [references/page-contracts.md](references/page-contracts.md) and propose it explicitly.
    - Respect the selected authority and consolidation policy. Treat the docs tree as authoritative by default and root `README.md` as a signpost rather than a second source of facts.
@@ -38,13 +38,13 @@ Turn bounded evidence into trustworthy documentation while preserving conflicts,
    - Use semantic link text that explains the destination's relevance.
    - Preserve negative boundaries: state what the page does not cover when confusion is likely.
    - Use Mermaid for diagrams. Prefer structure and labels over fixed colors; avoid diagram-local styles and themes unless both light and dark rendering are verified.
-   - Store new ADRs under `docs/architecture/adrs/` as `NNN-kebab-case-title.md`, then update the ADR index and MkDocs navigation. Reserve `000` for the ADR convention.
+   - Store new ADRs under `docs/architecture/adrs/` as `adr-NNN-kebab-case-title.md` with `## Status` in the body, then add them to the ADR list in `docs/architecture/overview.md`, the sidebar in `docs/.vitepress/config.mts`, and `.agents/decisions.md`. Never weaken an ADR to fit reality; register the deviation in `docs/architecture/exceptions.md`.
 7. Validate against evidence.
    - Re-read every material claim against its supporting source.
    - Check links and local documentation builds when available.
    - Search for contradictions introduced elsewhere by the new pages.
    - Mark incomplete sections honestly instead of filling them with plausible prose.
-   - Run `python3 -m mkdocs build --strict` when the repository uses MkDocs.
+   - Run `npm --prefix docs run docs:build` when the repository uses VitePress. Confirm every new page is in the sidebar.
 
 ## Existing Documents
 
@@ -55,7 +55,7 @@ When migrating legacy or external material:
 - preserve attribution and useful historical context;
 - quarantine unresolved conflicts rather than laundering them into current documentation;
 - archive source documents only when preservation and redirect behavior are clear.
-- when initialization consolidated pages losslessly, reconcile their claims at the new path, remove temporary migration notices after verification, and change `lifecycle: needs-review` to `lifecycle: current` only when evidence supports it;
+- when initialization consolidated pages losslessly, reconcile their claims at the new path, and remove the dated *Moved* notice and *(unverified)* markers only when evidence supports each claim;
 - update the thin root README only when authoritative destinations or stable links change.
 
 ## Boundaries

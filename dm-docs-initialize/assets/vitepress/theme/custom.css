@@ -1,0 +1,67 @@
+/* Brand color. Replace with the product's primary color; keep the dark steps
+   lighter than the light steps so links and buttons stay readable on dark. */
+:root {
+  --vp-c-brand-1: #004685;
+  --vp-c-brand-2: #2f679c;
+  --vp-c-brand-3: #004685;
+  --vp-c-brand-soft: rgba(0, 70, 133, 0.14);
+}
+
+.dark {
+  --vp-c-brand-1: #7cabd6;
+  --vp-c-brand-2: #5c8fc0;
+  --vp-c-brand-3: #2f679c;
+  --vp-c-brand-soft: rgba(124, 171, 214, 0.16);
+}
+
+/* Mermaid htmlLabels (needed for multi-line node labels) render a <p> inside
+   each node's foreignObject, sized by mermaid at line-height 1.5. The site's
+   prose line-height cascades onto that <p> and stretches the text past the
+   box. Restore mermaid's own value; prose elsewhere is untouched. */
+.mermaid .nodeLabel p,
+.mermaid .edgeLabel p {
+  line-height: 1.5;
+}
+
+.vp-doc a {
+  font-weight: inherit !important;
+}
+
+/* Glossary term links (see .vitepress/glossary/glossary-plugin.mjs). CSS-only
+   tooltip via the data-tooltip attribute — no Vue component, so it survives
+   static pre-rendering with no hydration step of its own. */
+/* .vp-doc a already sets a solid underline at equal-or-higher specificity;
+   the compound selector is needed to actually win the dashed style. */
+.vp-doc a.glossary-term {
+  position: relative;
+  color: inherit;
+  text-decoration: underline dashed;
+}
+
+.glossary-term::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  width: max-content;
+  max-width: 320px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-brand-1);
+  background-color: var(--vp-c-bg-elv);
+  color: var(--vp-c-text-1);
+  font-size: 13px;
+  line-height: 1.4;
+  text-decoration: none;
+  box-shadow: var(--vp-shadow-3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.glossary-term:hover::after,
+.glossary-term:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+}

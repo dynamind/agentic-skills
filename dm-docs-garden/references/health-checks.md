@@ -8,11 +8,12 @@ Review dimensions in risk order.
 - Are security, privacy, compatibility, operational, and data instructions safe?
 - Are generated or externally owned facts hand-copied elsewhere?
 
-## Authority and lifecycle
+## Authority and currency
 
 - Can readers distinguish authoritative, explanatory, proposed, generated, historical, and superseded pages?
-- Are lifecycle, owner, and review date meaningful rather than decorative?
-- Does any page misuse Material's reserved `status` key for document lifecycle?
+- Are dated snapshot blockquotes (`> **Reviewed:**`, `> **Moved:**`) and *(unverified)* markers still true, and removed once verified?
+- Do content pages carry no YAML frontmatter? State is in the page: `## Status` on an ADR, a dated blockquote on a snapshot.
+- Do open items in the registers (`ideas.md`, `questions.md`, `exceptions.md`) still belong there, and does every exception have an exit condition?
 - Does archived material remain visibly non-current?
 - Is the docs tree authoritative, with the root README acting only as a signpost?
 - Are root-level narrative Markdown files limited to `README.md`, `AGENTS.md`, and documented exceptions?
@@ -30,13 +31,13 @@ Review dimensions in risk order.
 - Does a hybrid page force readers to alternate repeatedly between incompatible intents?
 - Is progressive disclosure appropriate to its page type?
 
-## MkDocs, ADRs, and diagrams
+## VitePress, ADRs, and diagrams
 
-- Does `docs/index.md` exist and does explicit MkDocs navigation reach every current page?
+- Does `docs/index.md` exist and does the sidebar in `docs/.vitepress/config.mts` reach every current page?
 - Is each section index labeled `Overview` in navigation, using `Introduction` for the section named Overview, without doubled labels?
-- Does `python3 -m mkdocs build --strict` succeed?
-- Do ADRs live under `docs/architecture/adrs/` with unique three-digit identifiers and kebab-case filenames?
-- Is the ADR entry immediately after Architecture in navigation?
+- Does `npm --prefix docs run docs:build` succeed?
+- Do ADRs live under `docs/architecture/adrs/` as `adr-NNN-kebab-case-title.md` with unique three-digit identifiers and `## Status` in the body?
+- Is every ADR listed in the collapsed Decision records group inside Architecture in the sidebar?
 - Are diagrams Mermaid unless an exception is documented?
 - Do Mermaid diagrams avoid fixed inline colors, themes, and initialization directives that undermine light and dark rendering?
 

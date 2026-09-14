@@ -1,4 +1,4 @@
 interface:
   display_name: "DM Docs Initialize"
-  short_description: "Initialize and consolidate MkDocs documentation"
-  default_prompt: "Use $dm-docs-initialize to establish a docs-authoritative Material for MkDocs site and consolidate scattered documentation."
+  short_description: "Set up a VitePress living-documentation site and the agent layer"
+  default_prompt: "Use $dm-docs-initialize to inspect this repository, establish the living-documentation system (VitePress docs site, registers, ADR convention, AGENTS.md and .agents/), and run a brownfield first pass from the evidence."

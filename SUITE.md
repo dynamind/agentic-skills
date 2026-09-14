@@ -16,11 +16,7 @@ This suite aligns software structure, documentation, and agent work with human r
 
 ### Modularity skills
 
-`dm-bounded-agent-work` defines the work slice, acceptance evidence, and risk-scaled verification. Use it first when a request is broad or likely to exceed one reasoning boundary.
-
-`dm-agentic-module-boundaries` maps modules, dependencies, consumers, and hidden coupling before implementation.
-
-`dm-contract-first-modules` designs or repairs the contract across a module boundary, including inputs, outputs, errors, timing, and ownership.
+`dm-bounded-agent-work` defines the work slice, acceptance evidence, and risk-scaled verification. Use it first when a request is broad or likely to exceed one reasoning boundary. It carries two references that it loads only when needed: `references/boundary-brief.md` maps modules, dependencies, consumers, and hidden coupling before implementation; `references/module-contract.md` designs or repairs the contract across a module boundary, including inputs, outputs, errors, timing, and ownership. These were previously the standalone skills `dm-map-module-boundaries` and `dm-contract-first-modules`.
 
 `dm-hypothesis-space-reasoning` expands and compares plausible explanations when requirements or evidence are ambiguous, then identifies the smallest useful next check.
 
@@ -34,7 +30,7 @@ upstream decision may invalidate.
 
 ### Documentation skills
 
-`dm-docs-initialize` creates a topic-first Material for MkDocs system with a landing page, navigation, Mermaid support, ADR conventions, authority and lifecycle metadata, archive boundaries, and page templates.
+`dm-docs-initialize` creates the living-documentation system: a VitePress site with role-based home, introduction, glossary, the ideas, questions, and exceptions registers, three-digit ADRs, theme-neutral Mermaid, an archive excluded from the build, and the agent layer (`AGENTS.md`, `CLAUDE.md`, `.agents/`). For brownfield repositories it runs a first pass that writes orientation pages from code, wiki, and chat evidence with uncertainty marked.
 
 `dm-docs-ingest` inventories and reconciles code, tests, configuration, existing documents, and other bounded evidence before writing documentation. It preserves provenance and keeps conflicting reader intents in separate page contracts.
 
@@ -46,7 +42,7 @@ upstream decision may invalidate.
 
 ```text
 problem-solution-provenance (when solution framing matters)
-                   → bounded-agent-work → module-boundaries → contract-first-modules (if needed)
+                   → bounded-agent-work (boundary brief and module contract as needed)
                    → implementation → understandability-review
                    → docs-garden (to synchronize affected documentation)
 ```
@@ -57,7 +53,7 @@ result into problem-solution provenance when those interpretations imply differe
 ### New project
 
 ```text
-new-project → bounded-agent-work → module-boundaries → contract-first-modules
+new-project → bounded-agent-work (boundary brief, module contract)
            → docs-initialize → docs-ingest → docs-garden
 ```
 

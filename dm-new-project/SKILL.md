@@ -15,7 +15,7 @@ The scaffold creates:
 - Postgres/Flyway starter wiring with Quarkus Dev Services and an initial migration.
 - `frontend/`: Vite/Vue 3 application with pinned Node/npm, exact dependency versions, hardened npm config, and a dev proxy to the backend.
 - Maven Resources Plugin wiring that copies `frontend/dist` into `backend/target/classes/META-INF/resources` and generated docs into `META-INF/resources/docs`.
-- `docs/`: Maven-backed MkDocs project guide for rapid onboarding by humans and agents.
+- `docs/`: VitePress project guide for rapid onboarding by humans and agents, as laid out by `dm-docs-initialize`.
 - `docs/architecture/adrs/`: ADR home using a three-digit index, for important structural decisions only.
 - `docs/architecture/brief.md`: concise architecture overview with Mermaid diagrams, business context, goals, trade-offs, and roadmap notes.
 - `docs/architecture/exceptions.md`: accepted deviations from the intended architecture or delivery plan.

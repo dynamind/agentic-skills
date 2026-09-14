@@ -1,124 +1,127 @@
-# Documentation Model
+# Documentation model
 
-Use this default only after inspecting the repository. Adapt names and depth to the product rather than creating empty bureaucracy.
+The shape a living-documentation site takes. It is the shape two production sites use;
+adapt names to the project, keep the roles.
 
-## Topic-first baseline
+## Two layers, one repository
 
-```text
-Documentation Home
-├── Overview
-├── Getting Started
-├── Features
-├── Architecture
-├── Interfaces
-├── Development
-├── Operations
-├── Security, Privacy, and Compliance
-├── Cookbook
-├── Releases and Roadmap
-├── Reference
-└── Archive
+| Layer | Reader | Location | Rule |
+|---|---|---|---|
+| Documentation site | humans first, agents second | `docs/` | Written to be read. The entry point is `docs/guide/index.md`. Rendered with VitePress. |
+| Agent layer | agentic tools | `AGENTS.md`, `CLAUDE.md`, `.agents/` | An index plus always-on rules. Detail lives in modules or in `docs/`. See [agent-layer.md](agent-layer.md). |
+
+Both layers are authoritative for what they hold. Neither restates the other; they link.
+The root `README.md` is a signpost to both.
+
+## The tree
+
+```
+docs/
+  index.md                     home: role-based reading paths
+  guide/index.md               Introduction: what the product is, what the site covers
+  guide/business-context.md    who it is for, the process it supports
+  guide/roadmap.md, how-we-work.md, ...
+  glossary.md                  the domain vocabulary; one authoring place per term
+  product/
+    personas/                  one page per persona; index compares them
+    features/                  one page per feature; index is the feature inventory
+    business-rules/            when rules outgrow the feature pages (legacy apps)
+    ideas.md                   register: observations and ideas, prefixed by who raised them
+    questions.md               register: questions waiting on a human
+  architecture/
+    overview.md                the parts, conventions, and the ADR list
+    diagrams.md                C4 context, container, component; Mermaid, theme-neutral
+    technology-stack.md
+    exceptions.md              register: EX-nnn deviations from accepted ADRs
+    hazards.md                 register: findings with evidence (brownfield first pass)
+    <language>-conventions.md  living rule pages with Wrong / Right pairs
+    adrs/adr-NNN-kebab-title.md
+  explanation/                 how a subsystem works and why; does not restate ADRs
+  how-to/                      one task per page; "operations/" for a legacy app with runbooks
+  reference/                   mirrors of external sources: wiki exports, legacy specs, chat digests
+  public/                      static files the site serves (source PDFs, screenshots)
+  archived/                    kept, not rendered (srcExclude)
 ```
 
-The landing page routes by intent; it does not repeat the system overview. Suggested routes include new to the system, understand a feature, understand the design, make a change, investigate a problem, perform a task, and find an exact fact.
+A section exists when it has a page. Do not create empty sections, index pages that only
+list children, or pages that promise content. A comment in a scaffolded page says what
+belongs there; that is enough.
 
-## Decisions before initialization
+## Page kinds and their contracts
 
-Make these choices visible instead of allowing preservation behavior to decide them accidentally:
+| Kind | Job | Shape |
+|---|---|---|
+| Home (`index.md`) | route by role | two to four reading paths, each a numbered list of links with one line of why |
+| Introduction (`guide/index.md`) | orient | what the product is, a table of guide pages and what each brings, one link to Architecture |
+| Explanation | make a subsystem understandable | scope statement, premise, how it works, constraints, related; leans on ADRs, never restates them |
+| How-to | complete one task | imperative title, prerequisites, numbered steps with commands, verify, when it fails |
+| Feature | say what the product does for whom | flow, business rules with sources, data, edge cases, related decisions |
+| Persona | say who we build for | status and evidence basis in bold lines, who, what they do, what they fear, sources |
+| Conventions | settle recurring style discussions | scope and status blockquote, one rule per section, Wrong / Right pairs |
+| ADR | constrain | `# ADR-NNN: statement`, `## Status`, `## Context`, `## Decision`, `## Consequences`; alternatives only when disputed |
+| Register | hold items until they land elsewhere | open section first, closed or answered section last, one format per file |
+| Reference mirror | preserve an external source | dated, ids of the originals, secrets removed, links to the page that worked the content in |
 
-| Decision | Recommended default |
-|---|---|
-| Site generator | Material for MkDocs when no existing tool governs the corpus |
-| Existing scattered docs | Consolidate into the tree; use route-in-place only for justified consumers |
-| Authoritative facts | Docs tree |
-| Root narrative files | Thin `README.md` signpost and `AGENTS.md` operating instructions only |
-| Section index nav label | `Overview`; use `Introduction` when the section itself is named Overview |
-| ADR scheme | `docs/architecture/adrs/NNN-short-kebab-title.md`; reserve `000` |
+Templates for each kind are in `../assets/pages/`. Copy the shape, not the placeholder text.
 
-## Page-level intent
+## Registers
 
-Use Diataxis as an editorial compass:
+Three registers carry what does not yet belong to a page:
 
-- `tutorial`: acquire skill through a guided, reliable learning path;
-- `how-to`: apply existing skill to achieve a bounded outcome;
-- `reference`: retrieve exact, authoritative facts;
-- `explanation`: build understanding of concepts, rationale, and trade-offs.
+- `docs/product/ideas.md`: observations, annoyances, ideas. Prefix each with who raised
+  it. Committed work moves to the backlog and out of this file.
+- `docs/product/questions.md`: one line per question, `**Q: who** — text` then
+  `**A: date** — text`. References point outward from the register; code never points
+  back at it. An answered question names the page where the answer landed.
+- `docs/architecture/exceptions.md`: `EX-nnn` entries for deviations from accepted ADRs,
+  each with what we do, which decision it departs from, why, what bounds it, and what
+  ends it. An entry with no exit condition is an undocumented decision, not an exception.
 
-Use additional contracts when clearer:
+A brownfield first pass adds a fourth: `docs/architecture/hazards.md`, findings from
+reading code and history, each a fact with its evidence and a severity to be confirmed.
 
-- `landing`: route readers;
-- `decision`: record a decision and rationale;
-- `runbook`: support action under operational conditions;
-- `release`: describe shipped change;
-- `roadmap`: communicate planned direction.
+Registers have sections. Insert in the open section, in the file's format. Never append at
+the bottom.
 
-Topic determines where a page lives. Intent determines how it is written. Do not make four giant Diataxis navigation buckets unless readers demonstrably seek them.
+## Glossary
 
-## Architecture decisions and diagrams
+`docs/glossary.md` is the one page to read before working in the domain. Entries are
+`#### Term` headings with one or two sentences of domain meaning. No code identifiers, no
+mechanics. Domain terms stay in the language the business speaks. Group entries under
+`##` headings when the list passes about twenty terms. No entry is added unprompted; the
+bar is a term the business needs defined.
 
-- Store ADRs under `docs/architecture/adrs/` using `NNN-kebab-case-title.md`.
-- Reserve `000-record-architecture-decisions.md` for the ADR convention and begin system decisions at `001`.
-- Put the ADR navigation entry immediately after Architecture.
-- Use Mermaid for diagrams.
-- Avoid fixed inline colors, diagram themes, and styling directives that fail across light and dark palettes.
+The site links the first mention of a term on every page to its glossary entry and shows
+the first sentence of the definition as a tooltip. Write that first sentence so it stands
+alone. See [vitepress.md](vitepress.md), Glossary linking.
 
-## Metadata contract
+## Metadata
 
-Prefer repository-native frontmatter. When none exists, use:
+No frontmatter on content pages. VitePress needs none, and a metadata block nobody
+maintains is worse than none. State what matters in the page:
 
-```yaml
-purpose: Explain what question this page answers.
-audience:
-  - developers
-doc_type: explanation
-authority: explanatory
-lifecycle: current
-owner: Team or role
-last_reviewed: YYYY-MM-DD
-sources:
-  - path/to/evidence
-```
+- an ADR carries `## Status` with state, date, and author;
+- a snapshot (review, audit, migration status) opens with a blockquote:
+  `> **Reviewed:** 2026-09-14` and `> **Scope:** ...`;
+- a persona opens with `**Status:**` and `**Evidence basis:**` lines;
+- a fact from a single unconfirmed source ends with *(unverified)*.
 
-Allowed values:
+The only frontmatter in the tree is VitePress's own: `layout: home` on `index.md` when a
+hero page is wanted, and Mermaid's `config: htmlLabels: true` inside a diagram.
 
-- `authority`: `authoritative`, `explanatory`, `generated`, `proposal`, `historical`, `superseded`;
-- `lifecycle`: `draft`, `current`, `needs-review`, `archived`.
+## Links
 
-Do not use `status` for the document lifecycle in Material for MkDocs. Material reserves that field for navigation badges and will render an icon for pages that set it.
+- Inside `docs/`, link with relative markdown links ending in `.md`. The build resolves
+  them and fails on a dead one.
+- Files outside `docs/` (source, scripts, agent skills) are cited in code spans, not
+  linked. The dead-link check cannot follow them, and a link that is never checked rots.
+- Link text says why the destination matters, not "here".
+- A heading that is a link target uses a colon, never an em-dash.
 
-Use `sources` for evidence traceability, not as a substitute for semantic prose links.
+## Diagrams
 
-## Repetition and authority
-
-- Repeat enough context for a page to stand alone.
-- Summarize related detail and link to its authoritative page.
-- Keep exact facts such as configuration defaults, API fields, retention periods, and supported versions in one canonical location.
-- Treat conflicting copies as a correctness problem, not merely a style problem.
-- Keep the docs tree authoritative by default. Reduce the root README to product identity and semantic links after consolidating its detailed facts.
-
-## Progressive disclosure
-
-For explanation pages, prefer this descent when appropriate:
-
-```text
-Summary → relevance → mental model → normal flow → details → failure modes → related material
-```
-
-Do not force the same headings onto reference, tutorial, runbook, or landing pages. Provide consistency within a page contract rather than uniformity across all documents.
-
-## Customization decisions
-
-Before applying the baseline, decide:
-
-- which sections have real material now;
-- which documentation tool and navigation files already govern the corpus;
-- which references are generated;
-- where ADRs, runbooks, releases, and API specifications already live;
-- whether security material needs restricted access;
-- how redirects and archived content are handled;
-- whether ownership is by person, team, or role.
-- whether an existing MkDocs configuration, dependency runner, or publishing pipeline must be preserved.
-- whether scattered documentation should be consolidated or deliberately routed in place;
-- which root-level narrative files are explicit exceptions to the docs-tree authority policy.
-
-Create shallow landing pages for justified empty sections. Do not fabricate product content to make the tree look complete.
+Mermaid only, rendered natively by the site in light and dark. Theme-neutral: no `fill`,
+no hex colors, no `style` or `classDef` with colors, no `%%{init}` themes. A node is a bold
+name plus at most one qualifier line. Multi-line labels need `htmlLabels: true` and
+backtick strings with real newlines; `<br/>` is dropped silently. Sequence-diagram labels
+are one source line.
