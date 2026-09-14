@@ -1,8 +1,8 @@
 # Language or layer conventions
 
 > **Scope**: which code this binds.\
-> **Status**: Living document. Add a rule here the first time a recurring style discussion
-> comes up. Once is anecdote, twice is convention.
+> **Status**: Living document. Add a rule here the second time the same style question
+> comes up.
 
 ## Rule name
 
@@ -16,4 +16,4 @@
 ```text
 ```
 
-<!-- One rule per section. Cite the review where the rule was born when that helps. -->
+<!-- One rule per section. Cite the review that produced the rule when that helps. -->

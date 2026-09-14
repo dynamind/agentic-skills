@@ -18,8 +18,8 @@ For stakeholders, product people, and anyone who needs the *why* before the *how
 For developers and anyone working on the codebase.
 
 1. **[Introduction](guide/index.md)**: the orientation, what is covered and where.
-2. **[Architecture overview](architecture/overview.md)**: how the parts fit together, and
+2. **[Architecture overview](architecture/overview.md)**: how the parts connect, and
    the numbered decision records.
-3. **[Glossary](glossary.md)**: the shared domain vocabulary the code speaks.
+3. **[Glossary](glossary.md)**: the shared domain vocabulary used in the code.
 
 Task-focused guides live in the **How-to** section of the sidebar once they exist.

@@ -33,7 +33,7 @@ not built before.
 ## Config decisions
 
 - `cleanUrls: false`. A plain static host serves files as-is.
-- `lastUpdated: false`. Git dates are noise on a living document.
+- `lastUpdated: false`. Git dates are not accurate on a living document.
 - `srcExclude` keeps `archived/**` and other non-rendered material out of the site but in
   the repository.
 - `ignoreDeadLinks` is a list of patterns, never `true`. Each pattern has a comment that
@@ -68,7 +68,7 @@ the markdown-it-anchor default; the two disagree on punctuation and the anchors 
 
 ## Sidebar
 
-Every page is in the sidebar or nobody finds it. Groups follow the tree: Home, Guide,
+Every page must be in the sidebar. Otherwise, a reader cannot find it. Groups follow the tree: Home, Guide,
 Product, Architecture (with a collapsed Decision records group listing each ADR by number
 and title), Explanation, How-to or Operations, Reference. A group is listed when it has a
 page. Section indexes are labeled `Introduction` under Guide and `Overview` elsewhere.

@@ -1,7 +1,7 @@
 # Settled decisions
 
-Calls that are made. Implement against them; don't reopen them in a diff. If one looks wrong,
-say so and stop. Don't route around it.
+Decisions that are settled. Implement against them. Do not reopen them in a diff. If one
+looks wrong, say so and stop. Do not route around it.
 
 Where a decision has an ADR, the ADR is authoritative and the line here is a pointer.
 

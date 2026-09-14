@@ -1,8 +1,7 @@
 # Ideas
 
-A scratchpad for observations, annoyances, and ideas that may be worth acting on.
-Each entry is prefixed with who raised it. Work that is committed to moves to the
-{{BACKLOG}}.
+A place to record observations, annoyances, and ideas that might be worth acting on.
+Each entry is prefixed with who raised it. Move committed work to the {{BACKLOG}}.
 
 ## Open
 

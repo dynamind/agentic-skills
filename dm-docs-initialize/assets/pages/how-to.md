@@ -1,7 +1,7 @@
 # Do the thing
 
-<!-- One task, one page. Title in the imperative. Open with when you need this and
-what you end up with. -->
+<!-- One task, one page. Title in the imperative. Open with when the reader needs this
+and what the result is. -->
 
 ## Prerequisites
 

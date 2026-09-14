@@ -23,7 +23,7 @@ markdown links. `npm run docs:build` in `docs/` finds the dead links.
 | Writing docs, comments, ADRs, or commit messages | [`.agents/writing-guide.md`](.agents/writing-guide.md)                       |
 | Working in the domain                            | [`docs/glossary.md`](docs/glossary.md)                                       |
 | Looking for the *why* behind the shape of things | [`docs/architecture/adrs/`](docs/architecture/adrs/)                         |
-| Hitting a rule the running system doesn't obey   | [`docs/architecture/exceptions.md`](docs/architecture/exceptions.md)         |
+| Hitting a rule the running system does not obey  | [`docs/architecture/exceptions.md`](docs/architecture/exceptions.md)         |
 | Noting something to fix later                    | [`docs/product/ideas.md`](docs/product/ideas.md)                             |
 | Blocked on a question only a human can answer    | [`docs/product/questions.md`](docs/product/questions.md)                     |
 
@@ -61,10 +61,10 @@ voice. Use plain words. Use one term for one thing. Do not use metaphor, idiom, 
 
 ## Stop and ask
 
-- The change would touch a production system in a way the task didn't clearly authorize.
+- The change would touch a production system in a way the task did not clearly authorize.
 - You are about to commit credentials, tokens, or PII.
 - Data that should be synthetic looks like it might be real production data.
-- A settled decision looks wrong. Say so and stop. Don't route around it.
+- A settled decision looks wrong. Say so and stop. Do not route around it.
 
 ## Keeping this honest
 
@@ -72,11 +72,11 @@ When `AGENTS.md` or a `.agents/` module contradicts an accepted ADR, the ADR win
 module gets fixed in the same change. Stale agent instructions are worse than missing ones.
 
 When *reality* contradicts an ADR, do not soften the ADR to fit. Record the deviation in
-[`docs/architecture/exceptions.md`](docs/architecture/exceptions.md): what we actually do,
-why, what bounds it, and what would end it. Leave the principle standing.
+[`docs/architecture/exceptions.md`](docs/architecture/exceptions.md): what we do, why, what
+bounds it, and what would end it. Leave the principle standing.
 
 Durable project facts belong in this file, a `.agents/` module, or `docs/`. A tool's private
 memory does not travel with the repo and no other harness reads it.
 
-Keep this file an index. If you find yourself adding a third paragraph on a topic, it belongs
-in a module or in `docs/`.
+Keep this file an index. If a topic needs a third paragraph, move it to a module or to
+`docs/`.

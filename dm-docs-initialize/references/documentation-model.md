@@ -53,7 +53,7 @@ belongs there; that is enough.
 |---|---|---|
 | Home (`index.md`) | route by role | two to four reading paths, each a numbered list of links with one line of why |
 | Introduction (`guide/index.md`) | orient | what the product is, a table of guide pages and what each brings, one link to Architecture |
-| Explanation | make a subsystem understandable | scope statement, premise, how it works, constraints, related; leans on ADRs, never restates them |
+| Explanation | make a subsystem understandable | scope statement, premise, how it works, constraints, related; depends on ADRs, never restates them |
 | How-to | complete one task | imperative title, prerequisites, numbered steps with commands, verify, when it fails |
 | Feature | say what the product does for whom | flow, business rules with sources, data, edge cases, related decisions |
 | Persona | say who we build for | status and evidence basis in bold lines, who, what they do, what they fear, sources |
@@ -114,7 +114,8 @@ hero page is wanted, and Mermaid's `config: htmlLabels: true` inside a diagram.
 - Inside `docs/`, link with relative markdown links ending in `.md`. The build resolves
   them and fails on a dead one.
 - Files outside `docs/` (source, scripts, agent skills) are cited in code spans, not
-  linked. The dead-link check cannot follow them, and a link that is never checked rots.
+  linked. The dead-link check cannot follow them, and a link that is never checked can
+  become wrong without warning.
 - Link text says why the destination matters, not "here".
 - No em-dashes anywhere in the tree. A heading uses a colon where it needs a divider.
 

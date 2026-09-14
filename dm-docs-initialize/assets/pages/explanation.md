@@ -1,6 +1,6 @@
 # Topic
 
-<!-- Open by stating the page's scope and which ADRs it leans on. It does not restate
+<!-- Open by stating the page's scope and which ADRs it depends on. It does not restate
 them. -->
 
 ## The premise

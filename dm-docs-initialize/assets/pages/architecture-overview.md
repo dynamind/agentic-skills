@@ -1,10 +1,10 @@
 # Architecture
 
-How {{SITE_NAME}} is built: the parts, how they talk, and the decisions that shaped them.
+How {{SITE_NAME}} is built: the parts, how they communicate, and the decisions that shaped them.
 
 ## Parts
 
-<!-- One paragraph per deployable part: what it is, what it owns, what it talks to.
+<!-- One paragraph per deployable part: what it is, what it owns, what it connects to.
 Add a C4 context diagram in Mermaid when there are three or more parts. Diagrams stay
 theme-neutral: no fill, no hex colors. -->
 
